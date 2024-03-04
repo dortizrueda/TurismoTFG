@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "967260222489",
+    "project_id": "turismouco-221d5",
+    "storage_bucket": "turismouco-221d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967260222489:android:ecef7e53f56ad8068fa688",
+        "android_client_info": {
+          "package_name": "com.example.turismotfg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUQdXFNgEw4alY1t0_WSEU7dLYIwsHS4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967260222489:android:5ed297e80f3d53348fa688",
+        "android_client_info": {
+          "package_name": "com.example.turismuco"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUQdXFNgEw4alY1t0_WSEU7dLYIwsHS4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
