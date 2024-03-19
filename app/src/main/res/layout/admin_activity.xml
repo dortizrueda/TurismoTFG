@@ -6,15 +6,16 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo3"
     tools:context=".AdminActivity"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:alpha="0.7"
         android:padding="20dp"
         >
-        <ImageView
+        <ImageButton
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/menu"
@@ -25,6 +26,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:alpha="0.7"
         >
 
         <ImageView
@@ -39,239 +42,178 @@
             android:alpha="0.7" />
 
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="28dp">
+        android:alpha="0.7"
+        android:background="@color/black">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/cinzel_decorative_bold"
-            android:text="Open your mind, Explore the world!"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textWelcome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/cinzel_decorative_bold"
-            android:alpha="0.7" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="30dp" />
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:background="@color/white"
-        android:elevation="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:text="SearchText.."
-            android:fontFamily="sans-serif-medium"/>
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/a2866321"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp">
-
-        </ImageView>
-
-
-
-    </RelativeLayout>
-    <LinearLayout
-        android:id="@+id/rectangles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        >
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="28dp">
 
-            <RelativeLayout
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@color/white"
-                android:elevation="5dp">
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/hoola2" />
-
-            </RelativeLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cities"
+                android:fontFamily="@font/cinzel_decorative_bold"
+                android:text="Open your mind, Explore the world!"
                 android:textColor="@color/white"
-                android:layout_gravity="center"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/textWelcome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.7"
+                android:fontFamily="@font/cinzel_decorative_bold" />
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
             <RelativeLayout
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="20dp"
                 android:background="@color/white"
-                android:elevation="5dp">
+                android:elevation="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="SearchText.." />
+
                 <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/hola1" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/a2866321">
+
+                </ImageView>
+
 
             </RelativeLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Guides"
-                android:textColor="@color/white"
-                android:layout_gravity="center"/>
-
-
-
-        </LinearLayout>
-
-    </LinearLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:background="#7A9C7E">
 
             <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="170dp"
-                android:layout_height="280dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/white">
+                android:id="@+id/rectangles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="50dp"
-                    android:fontFamily="@font/cinzel_decorative_bold"
-                    android:text="Amazing"
-                    android:textAllCaps="true"
-                    android:textColor="@color/black"
-                    android:textSize="25dp" />
+                    android:orientation="vertical">
 
-                <TextView
+                    <RelativeLayout
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@color/white"
+                        android:elevation="5dp">
+
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/person" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Users"
+                        android:textColor="@color/white" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_marginTop="200dp"
-                    android:fontFamily="@font/cinzel_decorative_bold"
-                    android:text="Broooo" />
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@color/white"
+                        android:elevation="5dp">
+
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/hola1" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Guides"
+                        android:textColor="@color/white" />
+
+
+                </LinearLayout>
 
             </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="179dp"
-                android:layout_height="280dp"
-                android:layout_alignBottom="@+id/linearLayout"
-                android:layout_marginBottom="0dp"
-                android:layout_toRightOf="@id/linearLayout"
-                android:background="@color/white" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="40dp"
-            android:padding="20dp"
-            >
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MOST VIEWED CITIES"
-                    android:textSize="20sp"
+                    android:layout_marginTop="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Users of the system"
                     android:textColor="@color/white"
                     android:fontFamily="@font/cinzel_decorative_bold"
-                    android:textAllCaps="true"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="view all"
-                    android:textColor="@color/white"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="40dp"
-            android:padding="20dp"
-            >
+                    android:textSize="20sp"
+                    />
+            </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MOST VIEWED CITIES"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/cinzel_decorative_bold"
-                    android:textAllCaps="true"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="view all"
-                    android:textColor="@color/white"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="0dp"
+                    android:background="@color/black"
+                    android:scrollbars="horizontal" />
+
             </RelativeLayout>
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="189dp"
+                android:src="@drawable/settings"
+                app:tint="@color/black" />
+
+
         </LinearLayout>
-
-
-
-
-    </LinearLayout>
     </ScrollView>
 
 </LinearLayout>

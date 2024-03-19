@@ -39,6 +39,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.google.firebase:firebase-database:20.3.0")
+    implementation ("com.google.firebase:firebase-firestore:23.0.3")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation("androidx.navigation:navigation-fragment:2.6.0")
@@ -46,4 +47,17 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    //MapsForge dependencies
+    implementation("org.osmdroid:osmdroid-android:6.1.18");
+    implementation ("androidx.preference:preference:1.2.0");
+    //implementation("org.mapsforge:mapsforge-core:0.20.0")
+    //implementation("org.mapsforge:mapsforge-map:0.20.0")
+    //implementation("org.mapsforge:mapsforge-map-reader:0.20.0")
+    //implementation("org.mapsforge:mapsforge-themes:0.20.0")
+    //implementation("org.mapsforge:mapsforge-map-android:0.20.0")
+    //implementation("com.caverock:androidsvg:1.4")
+    //implementation("org.mapsforge:mapsforge-core:0.20.0")
+    //implementation("org.mapsforge:mapsforge-poi:0.20.0")
+    //implementation("org.mapsforge:mapsforge-poi-android:0.20.0")
+
 }

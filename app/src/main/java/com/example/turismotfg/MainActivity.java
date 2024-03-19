@@ -21,6 +21,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -44,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!validate_email() | !validate_password()) {
-                    Toast.makeText(MainActivity.this, "Error en las credenciales", Toast.LENGTH_SHORT).show();
+                if (validate_email()==false | validate_password()==false) {
+                    Toast.makeText(MainActivity.this, "Error en tus credenciales", Toast.LENGTH_SHORT).show();
                 } else {
                     check_user();
                 }
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean validate_email() {
         String email1 = editTextEmail.getText().toString();
         if (email1.isEmpty()) {
-            editTextEmail.setError("No has introducido el email.");
+            editTextEmail.setError("No has introducido el correo electrónico.");
             return false;
         } else {
             editTextEmail.setError(null);
@@ -74,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean validate_password() {
         String password1 = editTextPassword.getText().toString();
         if (password1.isEmpty()) {
-            editTextPassword.setError("No has introducido el password.");
+            editTextPassword.setError("No has introducido la contraseña.");
             return false;
         } else {
             editTextPassword.setError(null);
@@ -91,48 +95,44 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            DatabaseReference reference = FirebaseDatabase.getInstance("https://turismouco-221d5-default-rtdb.europe-west1.firebasedatabase.app")
-                                    .getReference("users");
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            CollectionReference usersRef = db.collection("users");
 
-                            reference.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (snapshot.exists()) {
-                                        for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                                            User user = userSnapshot.getValue(User.class);
+                            usersRef.whereEqualTo("email", email)
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                                    User user = document.toObject(User.class);
 
-                                            if (user != null) {
-                                                // Autenticación exitosa y se obtuvo la información del usuario
-                                                Intent intent;
+                                                    if (user != null) {
+                                                        // Autenticación exitosa y se obtuvo la información del usuario
+                                                        Intent intent;
 
-                                                if (TextUtils.equals(user.getRol().toString(), Rol.admin.toString())) {
-                                                    // Usuario administrador, redirecciona a la actividad de administrador
-                                                    intent = new Intent(MainActivity.this, AdminActivity.class);
-                                                } else {
-                                                    // No es administrador, redirecciona a la actividad de usuario normal
-                                                    intent = new Intent(MainActivity.this, UserActivity.class);
+                                                        if (TextUtils.equals(user.getRol().toString(), Rol.admin.toString())) {
+                                                            // Usuario administrador, redirecciona a la actividad de administrador
+                                                            intent = new Intent(MainActivity.this, AdminActivity.class);
+                                                        } else {
+                                                            // No es administrador, redirecciona a la actividad de usuario normal
+                                                            intent = new Intent(MainActivity.this, UserActivity.class);
+                                                        }
+
+                                                        // Pasa el objeto del usuario como extra al intent
+                                                        intent.putExtra("USER_OBJECT_EXTRA", user);
+                                                        startActivity(intent);
+                                                    } else {
+                                                        // El objeto User es nulo, manejar el caso según tus necesidades
+                                                        Toast.makeText(MainActivity.this, "Error: Información del usuario nula", Toast.LENGTH_SHORT).show();
+                                                    }
                                                 }
-
-                                                // Pasa el objeto del usuario como extra al intent
-                                                intent.putExtra("USER_OBJECT_EXTRA", user);
-                                                startActivity(intent);
                                             } else {
-                                                // El objeto User es nulo, manejar el caso según tus necesidades
-                                                Toast.makeText(MainActivity.this, "Error: Información del usuario nula", Toast.LENGTH_SHORT).show();
+                                                // Error al obtener datos de Firestore
+                                                Toast.makeText(MainActivity.this, "Error al obtener información del usuario", Toast.LENGTH_SHORT).show();
                                             }
                                         }
-                                    } else {
-                                        // No se encontró información del usuario en Realtime Database
-                                        Toast.makeText(MainActivity.this, "Error: Usuario no encontrado en la base de datos", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    // Manejar errores de la base de datos
-                                    Toast.makeText(MainActivity.this, "Error al obtener información del usuario: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                                    });
                         } else {
                             // Autenticación fallida
                             Toast.makeText(MainActivity.this, "Error al iniciar sesión: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
 
 }

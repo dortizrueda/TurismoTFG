@@ -7,7 +7,6 @@ public class User implements Serializable {
     String surname;
     String email;
     String password;
-    String username;
     Rol rol;
 
     public String getName() {
@@ -26,8 +25,6 @@ public class User implements Serializable {
         return password;
     }
     public Rol getRol() { return rol; }
-    public String getUsername() {return username;}
-    public void setUsername(String username) {this.username = username;}
     public void setRol(Rol rol) { this.rol = rol; }
 
     public void setName(String name) {
@@ -46,8 +43,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public User(String username, String email, String name, String surname, String password, Rol rol) {
-        this.username = username;
+    public User(String email, String name, String surname, String password, Rol rol) {
         this.email = email;
         this.name = name;
         this.surname = surname;
