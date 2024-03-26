@@ -1,4 +1,4 @@
-package com.example.turismotfg;
+package com.example.turismotfg.Entity;
 
 import java.io.Serializable;
 

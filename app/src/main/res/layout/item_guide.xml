@@ -2,14 +2,13 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/recyclerCardUser"
+    android:id="@+id/recyclerCardGuide"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
     app:cardCornerRadius="20dp"
-    android:elevation="10dp"
-    android:orientation="horizontal">
+    android:elevation="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,7 +17,7 @@
 
 
         <TextView
-            android:id="@+id/textViewUsername"
+            android:id="@+id/textViewName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -27,15 +26,14 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textViewEmail"
+            android:id="@+id/textViewDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewUsername"
+            android:layout_below="@id/textViewName"
             android:layout_marginTop="4dp"
             android:textColor="@color/my_primary"
             android:textSize="16sp" />
     </RelativeLayout>
 
-    <!-- Añade más vistas según tus necesidades -->
 
 </androidx.cardview.widget.CardView>

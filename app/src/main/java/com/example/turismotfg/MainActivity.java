@@ -10,28 +10,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.turismotfg.Entity.Rol;
+import com.example.turismotfg.Entity.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Objects;
-
 public class MainActivity extends AppCompatActivity {
 
-    private EditText editTextEmail, editTextPassword;
     private Button btnLogin, btnRegister;
+
+    private EditText input_email, input_password;
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
@@ -40,18 +35,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editTextEmail = findViewById(R.id.email);
-        editTextPassword = findViewById(R.id.password);
+        input_email = findViewById(R.id.email);
+        input_password = findViewById(R.id.password);
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validate_email()==false | validate_password()==false) {
+                if (email_checker()==false | password_checker()==false) {
                     Toast.makeText(MainActivity.this, "Error en tus credenciales", Toast.LENGTH_SHORT).show();
                 } else {
-                    check_user();
+                    user_checker();
                 }
             }
         });
@@ -64,37 +59,37 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public boolean validate_email() {
-        String email1 = editTextEmail.getText().toString();
+    public boolean email_checker() {
+        String email1 = input_email.getText().toString();
         if (email1.isEmpty()) {
-            editTextEmail.setError("No has introducido el correo electrónico.");
+            input_email.setError("No has introducido el correo electrónico.");
             return false;
         } else {
-            editTextEmail.setError(null);
+            input_email.setError(null);
             return true;
         }
     }
 
-    public boolean validate_password() {
-        String password1 = editTextPassword.getText().toString();
+    public boolean password_checker() {
+        String password1 = input_password.getText().toString();
         if (password1.isEmpty()) {
-            editTextPassword.setError("No has introducido la contraseña.");
+            input_password.setError("No has introducido la contraseña.");
             return false;
         } else {
-            editTextPassword.setError(null);
+            input_password.setError(null);
             return true;
         }
     }
 
-    public void check_user() {
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+    public void user_checker() {
+        String email = input_email.getText().toString().trim();
+        String password = input_password.getText().toString().trim();
 
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {//Listener que se va ejutar cuando se inicie sesión
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful()) {//Si Inicio Sesión fue exitoso
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
                             CollectionReference usersRef = db.collection("users");
 
@@ -113,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
                                                         if (TextUtils.equals(user.getRol().toString(), Rol.admin.toString())) {
                                                             // Usuario administrador, redirecciona a la actividad de administrador
-                                                            intent = new Intent(MainActivity.this, AdminActivity.class);
+                                                            intent = new Intent(MainActivity.this, MainActivity.class);
                                                         } else {
                                                             // No es administrador, redirecciona a la actividad de usuario normal
                                                             intent = new Intent(MainActivity.this, UserActivity.class);

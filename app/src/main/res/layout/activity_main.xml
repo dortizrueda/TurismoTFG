@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="28dp">
+            android:padding="25dp">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -26,12 +26,12 @@
 
 
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:cardCornerRadius="28dp"
-        android:layout_marginBottom="90dp">
+        android:layout_marginBottom="0dp"
+        android:background="@color/white">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,12 +49,11 @@
                 android:layout_height="wrap_content"
                 android:text="Login with your info..."
                 android:alpha="0.7"/>
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:text="Email"
                 android:alpha="0.7"
                 android:textStyle="bold"/>
@@ -67,6 +66,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:text="Password"
                 android:alpha="0.7"
                 android:textStyle="bold"/>
@@ -100,24 +100,9 @@
 
             </LinearLayout>
 
-
-            <TextView
-                android:id="@+id/forgotpass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btnLogin"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                android:text="Forgot password?"
-                android:textStyle="bold"
-                android:textColor="#589790" />
-
         </LinearLayout>
 
 
-    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
 </RelativeLayout>

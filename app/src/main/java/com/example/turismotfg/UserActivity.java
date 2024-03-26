@@ -1,31 +1,24 @@
 package com.example.turismotfg;
 
-import com.example.turismotfg.User;
-import com.example.turismotfg.UserAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.SearchView;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.turismotfg.Entity.Places;
+import com.example.turismotfg.Entity.User;
+import com.example.turismotfg.Entity.Guide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -33,97 +26,93 @@ public class UserActivity extends AppCompatActivity {
 
     private ArrayList<User> userList;
     private UserAdapter userAdapter;
-    FloatingActionButton fab;
-    RecyclerView recyclerView;
-    ValueEventListener eventListener;
-    SearchView searchView;
+    private ArrayList<Guide> guideList;
+    private ArrayList<Places> placeList;
 
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
-    private Button map;
+    private GuideAdapter guideAdapter;
+    private FloatingActionButton fab;
+    private RecyclerView recyclerView;
+    private RecyclerView recyclerViewGuide;
 
+    private SearchView searchView;
+
+    private FirebaseFirestore firestore;
+    private CollectionReference usersReference;
+    private CollectionReference guideReference;
+    private ImageButton mapButton,guideButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity);
-        map=findViewById(R.id.button_mappp);
+
         fab = findViewById(R.id.fab);
         recyclerView = findViewById(R.id.recyclerView);
+        recyclerViewGuide = findViewById(R.id.recyclerViewGuide);
+        mapButton = findViewById(R.id.gps_button);
+        guideButton=findViewById(R.id.guide_button);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(UserActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        userList = new ArrayList<>();
+        userAdapter = new UserAdapter(this, userList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(userAdapter);
 
+        guideList = new ArrayList<>();
+        placeList=new ArrayList<>();
+        guideAdapter = new GuideAdapter(this, guideList, placeList);
+        recyclerViewGuide.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewGuide.setAdapter(guideAdapter);
+
+        AlertDialog dialog = createProgressDialog();
+
+        firestore = FirebaseFirestore.getInstance();
+        usersReference = firestore.collection("users");
+        guideReference = firestore.collection("guides");
+
+        dialog.show();
+        usersReference.addSnapshotListener((queryDocumentSnapshots, error) -> {
+            if (error != null) {
+                dialog.dismiss();
+                return;
+            }
+
+            userList.clear();
+            for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
+                DocumentSnapshot documentSnapshot = documentChange.getDocument();
+                User user = documentSnapshot.toObject(User.class);
+                userList.add(user);
+            }
+            userAdapter.notifyDataSetChanged();
+            dialog.dismiss();
+        });
+        guideReference.addSnapshotListener((queryDocumentSnapshots, error) -> {
+            if (error!=null){
+                dialog.dismiss();
+                return;
+            }
+            guideList.clear();
+            for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()){
+                DocumentSnapshot documentSnapshot = documentChange.getDocument();
+                Guide guide = documentSnapshot.toObject(Guide.class);
+                guideList.add(guide);
+            }
+            guideAdapter.notifyDataSetChanged();
+            dialog.dismiss();
+        });
+        //Inicializar Mapa
+        mapButton.setOnClickListener(v -> startActivity(new Intent(UserActivity.this, MapView.class)));
+        guideButton.setOnClickListener(v -> startActivity(new Intent(this,GuideActivity.class)));
+
+        fab.setOnClickListener(view -> {
+        });
+
+
+    }
+
+    private AlertDialog createProgressDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-        map.setOnClickListener(new View.OnClickListener() {
-                                   @Override
-                                   public void onClick(View v) {
-                                       startActivity(new Intent(UserActivity.this, MapView.class));
-                                   }
-                               }
-    );
-
-
-                userList = new ArrayList<>();
-        userAdapter = new UserAdapter(UserActivity.this, userList);  // Pasa el contexto al adaptador
-        recyclerView.setAdapter(userAdapter);
-
-        databaseReference = FirebaseDatabase.getInstance("https://turismouco-221d5-default-rtdb.europe-west1.firebasedatabase.app")
-                .getReference("users");
-        dialog.show();
-        eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userList.clear();
-                for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
-                    User user = itemSnapshot.getValue(User.class);
-                    userList.add(user);
-                }
-                userAdapter.notifyDataSetChanged();
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                dialog.dismiss();
-            }
-        });
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Aquí puedes agregar la lógica para abrir la actividad de creación de usuario, por ejemplo.
-            }
-        });
-
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                User selectedUser = userList.get(position);
-
-                Intent intent = new Intent(UserActivity.this, UserProfile.class);
-
-                intent.putExtra("email", selectedUser.getEmail());
-
-                startActivity(intent);
-            }
-
-        }));
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (eventListener != null) {
-            databaseReference.removeEventListener(eventListener);
-        }
+        return builder.create();
     }
 }
-
-
-

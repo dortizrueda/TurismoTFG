@@ -59,5 +59,7 @@ dependencies {
     //implementation("org.mapsforge:mapsforge-core:0.20.0")
     //implementation("org.mapsforge:mapsforge-poi:0.20.0")
     //implementation("org.mapsforge:mapsforge-poi-android:0.20.0")
+    implementation ("com.squareup.picasso:picasso:2.71828");
+
 
 }
