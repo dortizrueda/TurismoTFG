@@ -23,7 +23,6 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class MapView extends AppCompatActivity {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
@@ -67,6 +66,7 @@ public class MapView extends AppCompatActivity {
             IMapController mapController = mapa.getController();
             mapController.setZoom(17.0);
 
+
             addPlaces();
             current_location = new MyLocationNewOverlay(mapa);
             current_location.enableMyLocation(); // Habilitar la visualización de la ubicación actual
@@ -81,7 +81,6 @@ public class MapView extends AppCompatActivity {
     }
 
     private void addPlaces() {
-        List<Places> list_places = new ArrayList<>();
 
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection("places").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -94,10 +93,11 @@ public class MapView extends AppCompatActivity {
                     List<String> images = (List<String>) document.get("images");
                     Double latitude = document.getDouble("latitude");
                     Double longitude = document.getDouble("longitude");
+                    String audio=document.getString("audio");
 
                     if (name != null && description != null && images != null &&
                             latitude != null && longitude != null) {
-                        Places p = new Places(name, description, images, latitude, longitude);
+                        Places p = new Places(name, description, images, latitude, longitude,audio);
                         list_places.add(p);
                     }
                 }

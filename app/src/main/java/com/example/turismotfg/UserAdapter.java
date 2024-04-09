@@ -35,13 +35,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textViewEmail.setText(userList.get(position).getEmail());
+        holder.email.setText(userList.get(position).getEmail());
 
-        holder.car_view.setOnClickListener(new View.OnClickListener() {
+        holder.recycler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.context, UserProfile.class);
                 intent.putExtra("email", userList.get(holder.getAdapterPosition()).getEmail());
+                intent.putExtra("name", userList.get(holder.getAdapterPosition()).getName());
+                intent.putExtra("surname",userList.get(holder.getAdapterPosition()).getSurname());
+                intent.putExtra("rol",userList.get(holder.getAdapterPosition()).getRol().toString());
                 holder.context.startActivity(intent);
             }
         });
@@ -54,15 +57,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textViewEmail;
-        CardView car_view;
+        public TextView email,name;
+        CardView recycler;
         Context context;
 
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this.context = context;
-            textViewEmail = itemView.findViewById(R.id.textViewEmail);
-            car_view = itemView.findViewById(R.id.recyclerCardUser);
+            email = itemView.findViewById(R.id.textViewEmail);
+            name=itemView.findViewById(R.id.textViewName);
+            recycler = itemView.findViewById(R.id.recyclerCardUser);
         }
     }
 }

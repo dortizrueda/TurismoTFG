@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.turismotfg.DAO.userDAO;
 import com.example.turismotfg.Entity.Rol;
 import com.example.turismotfg.Entity.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +41,7 @@ public class UserRegister extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        userDAO user=new userDAO(UserRegister.this);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,42 +52,10 @@ public class UserRegister extends AppCompatActivity {
                 String password = inputPassword.getText().toString().trim();
                 Rol rol = Rol.no_admin;
 
+                boolean register=checkRegister(name,surname,email,password);
                 // Validar la entrada del usuario
-                if (checkRegister(name, surname, email, password)) {
-                    // Crear usuario en Firebase Authentication
-                    firebaseAuth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(UserRegister.this, task -> {
-                                if (task.isSuccessful()) {
-                                    // Registro en Firebase Authentication exitoso
-                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-                                    if (firebaseUser != null) {
-                                        // Crear objeto User
-                                        User user = new User(email, name, surname, password,rol);
-
-                                        // Obtener la referencia a la colección "users" en Firestore
-                                        CollectionReference usersRef = FirebaseFirestore.getInstance().collection("users");
-
-                                        // Guardar información en Firestore
-                                        usersRef.document(firebaseUser.getUid()).set(user)
-                                                .addOnSuccessListener(aVoid -> {
-                                                    Toast.makeText(UserRegister.this, "Registro exitoso!", Toast.LENGTH_SHORT).show();
-                                                    Intent intent = new Intent(UserRegister.this, MainActivity.class);
-                                                    startActivity(intent);
-                                                })
-                                                .addOnFailureListener(e -> {
-                                                    // Manejar errores durante el registro en Firestore
-                                                    Toast.makeText(UserRegister.this, "Error al registrar el usuario en Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                });
-                                    } else {
-                                        // Manejar el caso en el que el objeto FirebaseUser sea nulo
-                                        Toast.makeText(UserRegister.this, "Error: Usuario de Firebase nulo", Toast.LENGTH_SHORT).show();
-                                    }
-                                } else {
-                                    // Manejar errores durante el registro en Firebase Authentication
-                                    Toast.makeText(UserRegister.this, "Error al registrar el usuario en Firebase: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                if (register) {
+                    user.register(email,name,surname,password,rol);
                 }
             }
         });
@@ -104,8 +74,6 @@ public class UserRegister extends AppCompatActivity {
             Toast.makeText(UserRegister.this, "Debes completar todos los registros.", Toast.LENGTH_SHORT).show();
             return false;
         }
-
-
         return true;
     }
 }

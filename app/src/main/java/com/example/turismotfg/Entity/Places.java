@@ -10,16 +10,19 @@ public class Places implements Serializable {
     private double latitud;
     private double longitud;
 
+    private String audioFile;
+
     public Places() {
         // Constructor vacío requerido por Firestore
     }
 
-    public Places(String nombre, String descripcion, List<String> imagenes, double latitud, double longitud) {
+    public Places(String nombre, String descripcion, List<String> imagenes, double latitud, double longitud,String audioFile) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagenes = imagenes;
         this.latitud = latitud;
         this.longitud = longitud;
+        this.audioFile=audioFile;
     }
 
     public String getNombre() {
@@ -61,4 +64,6 @@ public class Places implements Serializable {
     public void setLongitud(double longitud) {
         this.longitud = longitud;
     }
+    public String getAudioFile(){return audioFile;}
+    public void setAudioFile(String audioFile){this.audioFile=audioFile;}
 }

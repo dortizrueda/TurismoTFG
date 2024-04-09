@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    layout_width="match_parent"
+    layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserActivity"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,12 +21,11 @@
         >
         <ImageButton
             android:id="@+id/menu_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/menu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/menu_icono"
             android:backgroundTint="@color/white"
-            android:src="@drawable/menu"
-            />
+            android:src="@drawable/menu"/>
 
     </RelativeLayout>
 
@@ -56,14 +59,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="28dp">
+            android:padding="28dp"
+            android:textAlignment="center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:fontFamily="@font/cinzel_decorative_bold"
+                android:fontFamily="serif"
                 android:text="Open your mind, Explore the world!"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -79,37 +83,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp" />
 
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginBottom="20dp"
-                android:background="@color/white"
-                android:elevation="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="SearchText.." />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/a2866321">
-
-                </ImageView>
-
-
-            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/rectangles"
@@ -181,6 +154,38 @@
 
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@color/white"
+                        android:elevation="5dp"
+                        >
+
+                        <ImageButton
+                            android:id="@+id/button_logout"
+                            android:layout_width="71dp"
+                            android:layout_height="74dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/salida" />
+
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Logout"
+                        android:textColor="@color/white" />
+
+
+                </LinearLayout>
 
 
 
@@ -195,7 +200,8 @@
                     android:layout_height="match_parent"
                     android:text="Users of the system"
                     android:textColor="@color/white"
-                    android:fontFamily="@font/cinzel_decorative_bold"
+                    android:fontFamily="serif"
+                    android:textStyle="bold"
                     android:textSize="20sp"
                     />
             </LinearLayout>
@@ -231,7 +237,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/cinzel_decorative_bold"
+                        android:fontFamily="serif"
+                        android:textStyle="bold"
                         android:text="GUIDES"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
@@ -262,3 +269,12 @@
     </ScrollView>
 
 </LinearLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/bottom_nav_menu"
+        app:headerLayout="@layout/header" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
