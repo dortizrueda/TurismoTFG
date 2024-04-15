@@ -4,7 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/recyclerCardGuide"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="370dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_margin="16dp"
@@ -12,33 +12,42 @@
         android:elevation="10dp"
         android:padding="10dp">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp">
-            <HorizontalScrollView
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/placeView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none">
-                <LinearLayout
-                    android:id="@+id/placeView"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:orientation="horizontal"
-                    android:adjustViewBounds="true">
-                </LinearLayout>
-            </HorizontalScrollView>
+                android:layout_height="200dp"
+                android:adjustViewBounds="true"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+        </HorizontalScrollView>
 
 
-            <TextView
-                android:id="@+id/textViewName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="218dp"
-                android:textColor="@color/my_primary"
-                android:gravity="center_horizontal"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="218dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/my_primary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="250dp"
+            android:layout_marginBottom="50dp"> <!-- Agrega un margen inferior para dejar espacio para el RatingBar -->
 
             <TextView
                 android:id="@+id/textViewDescription"
@@ -46,21 +55,32 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewName"
                 android:layout_marginTop="8dp"
+                android:maxHeight="200dp"
                 android:textColor="#264542"
                 android:textSize="16sp" />
+        </ScrollView>
 
-            <ImageButton
-                android:id="@+id/imageViewFavorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="0dp"
-                android:layout_marginBottom="0dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="@drawable/ic_favs" />
-        </RelativeLayout>
+
+        <RatingBar
+            android:id="@+id/average_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
+            android:layout_marginTop="297dp"
+            android:isIndicator="true"
+            android:scaleX="0.75"
+            android:scaleY="0.75" />
+
+        <ImageButton
+            android:id="@+id/imageViewFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:clickable="true"
+            android:focusable="true" />
+    </RelativeLayout>
 
 
     </androidx.cardview.widget.CardView>

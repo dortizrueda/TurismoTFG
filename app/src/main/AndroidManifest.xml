@@ -14,7 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TurismoTFG"
         tools:targetApi="31">
-
+        <activity android:name=".EditNameActivity"
+            android:exported="false"
+            android:label="edit_name"/>
+        <activity android:name=".EditPaswordActivity"
+            android:exported="false"
+            android:label="edit_email"/>
+        <activity android:name=".EditSurnameActivity"
+            android:exported="false"
+            android:label="edit_surname"/>
         <activity
             android:name=".PlaceProfile"
             android:exported="false"
@@ -23,7 +31,7 @@
             android:name=".GuideActivity"
             android:exported="false"
             android:label="guide_activity" />
-        <activity android:name=".ZoomImageView"
+        <activity android:name=".ZoomImageActivity"
             android:exported="false"
             android:label="zoom_image"/>
         <activity android:name=".UserActivity"

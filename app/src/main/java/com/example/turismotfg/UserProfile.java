@@ -9,12 +9,15 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.turismotfg.Entity.CurrentUser;
 import com.google.android.material.navigation.NavigationView;
@@ -29,6 +32,18 @@ public class UserProfile extends AppCompatActivity {
         TextView detailNameTextView = findViewById(R.id.textViewName);
         TextView detailSurnameTextView=findViewById(R.id.textViewSurname);
         TextView detailRolTextView=findViewById(R.id.textViewRol);
+        TextView detailPasswordTextView=findViewById(R.id.textViewPassword);
+        ImageButton edit_name=findViewById(R.id.editName);
+        ImageButton edit_surname=findViewById(R.id.editSurname);
+        ImageButton edit_email=findViewById(R.id.editPassword);
+        ImageButton menu_icon=findViewById(R.id.menu_icon);
+        menu_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawerLayout drawer=findViewById(R.id.container2);
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
         Button back_button=findViewById(R.id.button_back);
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -61,6 +76,7 @@ public class UserProfile extends AppCompatActivity {
         String surname = sharedPreferences.getString("surname", "");
         String email = sharedPreferences.getString("email", "");
         String rol = sharedPreferences.getString("rol", "");
+        String password=sharedPreferences.getString("password","");
 
         String creadorType = "Creador de Guias";
         String userType = "Usuario";
@@ -73,6 +89,7 @@ public class UserProfile extends AppCompatActivity {
         detailNameTextView.setText(name);
         detailSurnameTextView.setText(surname);
         detailRolTextView.setText(rol);
+        detailPasswordTextView.setText(password);
 
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +97,28 @@ public class UserProfile extends AppCompatActivity {
                 finish();
             }
         });
+        edit_name.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserProfile.this, EditNameActivity.class);
+                startActivity(intent);
+            }
+        });
+        edit_surname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(UserProfile.this,EditSurnameActivity.class);
+                startActivity(intent);
+            }
+        });
+        edit_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(UserProfile.this,EditPaswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
 

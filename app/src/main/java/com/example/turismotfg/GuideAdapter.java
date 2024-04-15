@@ -58,7 +58,9 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.name.setText(guideList.get(position).getName());
         holder.description.setText(guideList.get(position).getDescription());
+
         Guide guide=guideList.get(position);
+
 
         List<DocumentReference>places=guide.getPlaces();
         Log.d("TAG", String.valueOf(places.size()));
@@ -106,8 +108,15 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(holder.context, GuideProfile.class);
+                String creatorUid = guideList.get(holder.getAdapterPosition()).getCreator();
+                if (creatorUid != null) {
+                    Log.d("CORREO", creatorUid);
+                } else {
+                    Log.d("CORREO", "Creator UID is null");
+                }
                     i.putExtra("name", guideList.get(holder.getAdapterPosition()).getName());
                     i.putExtra("description", guideList.get(holder.getAdapterPosition()).getDescription());
+                    i.putExtra("creator",guideList.get(holder.getAdapterPosition()).getCreator());
                     i.putExtra("placeList",(Serializable) placeList );
                     holder.context.startActivity(i);
             }

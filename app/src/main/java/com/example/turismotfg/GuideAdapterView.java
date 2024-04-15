@@ -9,16 +9,22 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.turismotfg.DAO.valoracionesDAO;
 import com.example.turismotfg.Entity.Guide;
 import com.example.turismotfg.Entity.Places;
 import com.example.turismotfg.DAO.userDAO;
+import com.example.turismotfg.DAO.guideDAO;
 
+import com.example.turismotfg.Entity.Valoration;
+import com.example.turismotfg.interfaces.GuideFavCallBack;
+import com.example.turismotfg.interfaces.ValorationList;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -36,11 +42,15 @@ import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.ViewHolder> {
 
     final userDAO userDAO;
+    guideDAO guideDAO;
     private Context context;
     private List<Guide> guideList;
     private List<Places> placeList;
@@ -53,6 +63,7 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
         this.context = context;
         this.guideList = guideList;
         this.userDAO = new userDAO(context);
+        this.guideDAO=new guideDAO(context);
         firestore=FirebaseFirestore.getInstance();
         auth=FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
@@ -72,6 +83,40 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
         holder.name.setText(guideList.get(position).getName());
         holder.description.setText(guideList.get(position).getDescription());
         Guide guide=guideList.get(position);
+        guideDAO.checkGuide(user.getUid(), guideList.get(position).getName(), new GuideFavCallBack() {
+            @Override
+            public void isFav(boolean fav) {
+                if (fav){
+                    holder.favs.setBackgroundResource(R.drawable.ic_favs_filled);
+                }else{
+                    holder.favs.setBackgroundResource(R.drawable.ic_favs);
+                }
+            }
+            @Override
+            public void onError(Exception exception) {
+
+            }
+        });
+        valoracionesDAO.getAllValByGuide(guideList.get(position).getName(), new ValorationList() {
+            @Override
+            public void onListValoration(List<Valoration> valoraciones) {
+                int contador=0;
+                float suma=0;
+                for (Valoration v:valoraciones) {
+                    Log.d("MEDIA", String.valueOf(v.getGuideId()));
+                    suma = suma + v.getRating();
+                    contador = contador + 1;
+                }
+                float valoracion_media=suma/contador;
+                Log.d("MEDIA",String.valueOf(valoracion_media));
+                holder.mediabar.setRating(valoracion_media);
+            }
+
+            @Override
+            public void onError(Exception exception) {
+
+            }
+        });
 
 
         List<DocumentReference>places=guide.getPlaces();
@@ -123,6 +168,7 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
                 Intent i = new Intent(holder.context, GuideProfile.class);
                 i.putExtra("name", guideList.get(holder.getAdapterPosition()).getName());
                 i.putExtra("description", guideList.get(holder.getAdapterPosition()).getDescription());
+                i.putExtra("creator",guideList.get(holder.getAdapterPosition()).getCreator());
                 i.putExtra("placeList",(Serializable) placeList );
                 holder.context.startActivity(i);
             }
@@ -132,17 +178,43 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
             @Override
             public void onClick(View v) {
                 Guide currentGuide = guideList.get(holder.getAdapterPosition());
-                userDAO.addGuideToUserFavs(currentGuide, new OnCompleteListener<Void>() {
+                guideDAO.checkGuide(user.getUid(), currentGuide.getName(), new GuideFavCallBack() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(context, "Guía agregada a favoritos", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.e("GuideAdapterView", "Error al agregar guía a favoritos", task.getException());
-                            Toast.makeText(context, "Error al agregar guía a favoritos", Toast.LENGTH_SHORT).show();
+                    public void isFav(boolean fav) {
+                        if (fav){
+                            userDAO.removeGuideFromFavs(currentGuide,new OnCompleteListener<Void>(){
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        Toast.makeText(context,"Guia eliminada de favs",Toast.LENGTH_SHORT).show();
+                                        holder.favs.setBackgroundResource(R.drawable.ic_favs);
+                                    }else{
+                                        Toast.makeText(context,"Error al eliminar de favs",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }else{
+                            userDAO.addGuideToUserFavs(currentGuide, new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(context, "Guía agregada a favoritos", Toast.LENGTH_SHORT).show();
+                                        holder.favs.setBackgroundResource(R.drawable.ic_favs_filled);
+
+                                    } else {
+                                        Log.e("GuideAdapterView", "Error al agregar guía a favoritos", task.getException());
+                                        Toast.makeText(context, "Error al agregar guía a favoritos", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                         }
                     }
+                    @Override
+                    public void onError(Exception exception) {
+
+                    }
                 });
+
             }
         });
 
@@ -152,11 +224,92 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
     public int getItemCount() {
         return guideList.size();
     }
+    public void getInOrderByMedia(){
+        Log.d("DENTRO", "getInOrderByMedia");
+        for (Guide g:guideList){
+            getMediaValoration(g);
+        }
+    }
+    public void setGuideListFilter(List<Guide>list){
+        this.guideList=list;
+        notifyDataSetChanged();
+    }
+    private void getMediaValoration(Guide o2) {
+        valoracionesDAO.getAllValByGuide(o2.getName(), new ValorationList() {
+            @Override
+            public void onListValoration(List<Valoration> valoraciones) {
+                int contador=0;
+                float suma=0;
+                for (Valoration v:valoraciones) {
+                    Log.d("MEDIA", String.valueOf(v.getGuideId()));
+                    suma = suma + v.getRating();
+                    contador = contador + 1;
+                }
+                float valoracion_media=suma/contador;
+                o2.setMedia(valoracion_media);
+                Log.d("MEDIA",String.valueOf(valoracion_media));
+                if (guideList.indexOf(o2) == guideList.size() - 1) {
+                    Collections.sort(guideList, new Comparator<Guide>() {
+                        @Override
+                        public int compare(Guide o1, Guide o2) {
+                            return Float.compare(o2.getMedia(), o1.getMedia()); // Orden descendente
+                        }
+                    });
+                    notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onError(Exception exception) {
+
+            }
+        });
+    }
+
+    public void getInOrderByMediaAsc() {
+        Log.d("DENTRO", "getInOrderByMedia");
+        for (Guide g:guideList){
+            getMediaValoration2(g);
+        }
+    }
+
+    private void getMediaValoration2(Guide g) {
+        valoracionesDAO.getAllValByGuide(g.getName(), new ValorationList() {
+            @Override
+            public void onListValoration(List<Valoration> valoraciones) {
+                int contador=0;
+                float suma=0;
+                for (Valoration v:valoraciones) {
+                    Log.d("MEDIA", String.valueOf(v.getGuideId()));
+                    suma = suma + v.getRating();
+                    contador = contador + 1;
+                }
+                float valoracion_media=suma/contador;
+                g.setMedia(valoracion_media);
+                Log.d("MEDIA",String.valueOf(valoracion_media));
+                if (guideList.indexOf(g) == guideList.size() - 1) {
+                    Collections.sort(guideList, new Comparator<Guide>() {
+                        @Override
+                        public int compare(Guide o1, Guide o2) {
+                            return Float.compare(o1.getMedia(), o2.getMedia()); // Orden descendente
+                        }
+                    });
+                    notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onError(Exception exception) {
+
+            }
+        });
+    }
 
     //Clase estatica...
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, description;
         LinearLayout images;
+        RatingBar mediabar;
         ImageButton favs;
         CardView recycler;
         Context context;
@@ -169,9 +322,11 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
             description = itemView.findViewById(R.id.textViewDescription);
             images=itemView.findViewById(R.id.placeView);
             favs=itemView.findViewById(R.id.imageViewFavorite);
+            mediabar=itemView.findViewById(R.id.average_rating);
         }
 
         public void bindImages(List<String> imagenes) {
+            images.removeAllViews();
 
             for (String imageUrl : imagenes) {
                 ImageView imageView = new ImageView(context);

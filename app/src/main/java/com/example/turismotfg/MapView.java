@@ -64,7 +64,7 @@ public class MapView extends AppCompatActivity {
             mapa.setTileSource(TileSourceFactory.MAPNIK);
             mapa.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT);
             IMapController mapController = mapa.getController();
-            mapController.setZoom(17.0);
+            mapController.setZoom(15.0);
 
 
             addPlaces();

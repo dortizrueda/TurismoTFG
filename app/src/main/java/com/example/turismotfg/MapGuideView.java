@@ -45,7 +45,7 @@ public class MapGuideView extends AppCompatActivity {
         IMapController mapController = mapa.getController();
         GeoPoint init=new GeoPoint(37.877787, -4.766466);
         mapController.setCenter(init);
-        mapController.setZoom(17.0);
+        mapController.setZoom(15.0);
         if (size_lat!=size_long){
             Toast.makeText(this,"No coinciden las longitudes, error en la apertura del mapa",Toast.LENGTH_SHORT).show();
             finish();

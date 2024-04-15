@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/container2"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserProfile">
     <LinearLayout
@@ -13,7 +14,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:layout_gravity="center_horizontal">
             <ImageButton
                 android:id="@+id/menu_icon"
@@ -30,40 +31,20 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/perfil" />
-        </androidx.cardview.widget.CardView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:paddingLeft="25dp">
-
-            <ImageView
-                android:id="@+id/editEmail"
-                android:layout_marginTop="6dp"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:src="@drawable/pencil"
-                android:contentDescription="Edit Icon"
-                android:onClick="editEmail"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Email: "
-                android:paddingLeft="20dp"
-                android:textStyle="bold"/>
-
             <TextView
                 android:id="@+id/textViewEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="125px"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+
+        </androidx.cardview.widget.CardView>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,14 +53,13 @@
             android:orientation="horizontal"
             android:paddingLeft="25dp">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/editName"
                 android:layout_marginTop="6dp"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
-                android:src="@drawable/pencil"
+                android:background="@drawable/pencil"
                 android:contentDescription="Edit Icon"
-                android:onClick="editName"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -104,14 +84,13 @@
             android:orientation="horizontal"
             android:paddingLeft="25dp">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/editSurname"
                 android:layout_marginTop="6dp"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
-                android:src="@drawable/pencil"
+                android:background="@drawable/pencil"
                 android:contentDescription="Edit Icon"
-                android:onClick="editSurname"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -122,6 +101,36 @@
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/textViewSurname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:paddingLeft="25dp">
+
+            <ImageButton
+                android:id="@+id/editPassword"
+                android:layout_marginTop="6dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:background="@drawable/pencil"
+                android:contentDescription="Edit Icon"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="20dp"
+                android:text="Password: "
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/textViewPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

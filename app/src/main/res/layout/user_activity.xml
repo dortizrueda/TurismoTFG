@@ -154,40 +154,6 @@
 
 
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@color/white"
-                        android:elevation="5dp"
-                        >
-
-                        <ImageButton
-                            android:id="@+id/button_logout"
-                            android:layout_width="71dp"
-                            android:layout_height="74dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/salida" />
-
-
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Logout"
-                        android:textColor="@color/white" />
-
-
-                </LinearLayout>
-
-
 
             </LinearLayout>
 

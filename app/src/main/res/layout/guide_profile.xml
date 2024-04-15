@@ -27,47 +27,103 @@
       </HorizontalScrollView>
 
 
+<ScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginTop="300dp"
+    android:layout_marginBottom="50dp"
+    >
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/inputName"
-        android:layout_width="317dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="800px"
-        android:textSize="28sp" />
+        <TextView
+            android:id="@+id/inputName"
+            android:layout_width="317dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="28sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="410dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Ceator: "
+                android:textSize="10sp"/>
+            <TextView
+                android:id="@+id/inputCreator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="10sp"/>
 
-    <TextView
-        android:id="@+id/inputDescription"
-        android:layout_width="317dp"
-        android:layout_height="77dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="900px"
-        android:textSize="20sp" />
-    <TextView
+        </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/inputDescription"
+            android:layout_width="317dp"
+            android:layout_height="77dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:textSize="20sp" />
+
+
+
+        <TextView
             android:layout_width="317dp"
             android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="160dp"
             android:text="Lugares de la guia: "
-            android:layout_marginTop="1100px"
             android:textSize="20sp" />
+
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewPlaces"
             android:layout_width="350dp"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="100px"
-            android:layout_marginTop="1200px"
+            android:layout_marginTop="190dp"
             android:layout_marginRight="100px"
-            android:layout_marginBottom="0dp"
             android:orientation="horizontal"
-            android:scrollbars="horizontal"/>
+            android:scrollbars="horizontal" />
+        <RatingBar
+            android:id="@+id/guideValoration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="300dp"
+            android:layout_centerHorizontal="true"/>
+        <Button
+            android:id="@+id/button_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Submit Rating"
+            android:background="@color/black"
+            android:layout_marginTop="360dp"/>
+    </RelativeLayout>
+
+</ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="1800px">
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0dp">
 
             <Button
                 android:id="@+id/button_mapg"
