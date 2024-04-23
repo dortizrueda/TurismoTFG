@@ -6,17 +6,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.turismotfg.DAO.guideDAO;
+import com.example.turismotfg.DAO.userDAO;
+import com.example.turismotfg.DAO.valoracionesDAO;
 import com.example.turismotfg.Entity.Guide;
 import com.example.turismotfg.Entity.Places;
+import com.example.turismotfg.Entity.Valoration;
+import com.example.turismotfg.interfaces.GuideFavCallBack;
+import com.example.turismotfg.interfaces.ValorationList;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,40 +37,47 @@ import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> {
-
+    final com.example.turismotfg.DAO.userDAO userDAO;
+    com.example.turismotfg.DAO.guideDAO guideDAO;
     private Context context;
     private List<Guide> guideList;
     private List<Places> placeList;
 
     private FirebaseFirestore firestore;
+    private FirebaseAuth auth;
+    private FirebaseUser user;
 
     public GuideAdapter(Context context, List<Guide> guideList) {
         this.context = context;
         this.guideList = guideList;
+        this.userDAO = new userDAO(context);
+        this.guideDAO=new guideDAO(context);
         firestore=FirebaseFirestore.getInstance();
-
+        auth=FirebaseAuth.getInstance();
+        user=auth.getCurrentUser();
     }
 
-    //Asignamos la vista para este item
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GuideAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_guide, parent, false);
-        return new ViewHolder(view, context);
+        return new GuideAdapter.ViewHolder(view, context);
     }
 
+
+
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GuideAdapter.ViewHolder holder, int position) {
         holder.name.setText(guideList.get(position).getName());
         holder.description.setText(guideList.get(position).getDescription());
-
         Guide guide=guideList.get(position);
-
 
         List<DocumentReference>places=guide.getPlaces();
         Log.d("TAG", String.valueOf(places.size()));
@@ -85,9 +102,10 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
 
                                         if (name != null && description != null && images != null &&
                                                 latitude != null && longitude != null) {
-                                                Places place = new Places(name, description, images, latitude, longitude,audioFile);
-                                                Log.d("TAG",place.getNombre());
-                                                placeList.add(place);
+                                            Places place = new Places(name, description, images, latitude, longitude,audioFile);
+                                            Log.d("TAG",place.getNombre());
+                                            holder.bindImages(place.getImagenes());
+                                            placeList.add(place);
                                         }
                                     } else {
                                         Toast toast = Toast.makeText(context, "Error al obtener información del lugar", Toast.LENGTH_SHORT);
@@ -108,29 +126,30 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(holder.context, GuideProfile.class);
-                String creatorUid = guideList.get(holder.getAdapterPosition()).getCreator();
-                if (creatorUid != null) {
-                    Log.d("CORREO", creatorUid);
-                } else {
-                    Log.d("CORREO", "Creator UID is null");
-                }
-                    i.putExtra("name", guideList.get(holder.getAdapterPosition()).getName());
-                    i.putExtra("description", guideList.get(holder.getAdapterPosition()).getDescription());
-                    i.putExtra("creator",guideList.get(holder.getAdapterPosition()).getCreator());
-                    i.putExtra("placeList",(Serializable) placeList );
-                    holder.context.startActivity(i);
+                i.putExtra("name", guideList.get(holder.getAdapterPosition()).getName());
+                i.putExtra("description", guideList.get(holder.getAdapterPosition()).getDescription());
+                i.putExtra("creator",guideList.get(holder.getAdapterPosition()).getCreator());
+                i.putExtra("placeList",(Serializable) placeList );
+                holder.context.startActivity(i);
             }
         });
+
+
     }
 
-    //Numero de guias que hay en la BD
     @Override
     public int getItemCount() {
-        return guideList.size();
+        return Math.min(2, guideList.size());
     }
 
+
+
+    //Clase estatica...
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, description;
+        LinearLayout images;
+        RatingBar mediabar;
+        ImageButton favs;
         CardView recycler;
         Context context;
 
@@ -140,8 +159,28 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
             recycler = itemView.findViewById(R.id.recyclerCardGuide);
             name = itemView.findViewById(R.id.textViewName);
             description = itemView.findViewById(R.id.textViewDescription);
+            images=itemView.findViewById(R.id.placeView);
+
         }
 
+        public void bindImages(List<String> imagenes) {
+
+            for (String imageUrl : imagenes) {
+                ImageView imageView = new ImageView(context);
+                LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                imageView.setLayoutParams(imageViewParams);
+                imageView.setAdjustViewBounds(true);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                // Cargar la imagen usando Picasso
+                Picasso.get().load(imageUrl).resize(1100, 750).into(imageView);
+
+                images.addView(imageView);
+            }
+        }
     }
-    }
+
+}
 

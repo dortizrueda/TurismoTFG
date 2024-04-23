@@ -2,6 +2,7 @@ package com.example.turismotfg;
 
 import static com.example.turismotfg.MainActivity.SHARE_PREFS;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -71,11 +73,11 @@ public class GuideProfile extends AppCompatActivity {
         TextView inputCreator=findViewById(R.id.inputCreator);
         recyclerViewPlace = findViewById(R.id.recyclerViewPlaces);
 
-
+        String description=null;
         Intent i = getIntent();
         if (i!=null){
             String name=i.getStringExtra("name");
-            String description=i.getStringExtra("description");
+            description=i.getStringExtra("description");
             String creator=i.getStringExtra("creator");
             List<Places> placeList = (List<Places>) i.getSerializableExtra("placeList");
 
@@ -154,6 +156,23 @@ public class GuideProfile extends AppCompatActivity {
         });
 
     }
+        String finalDescription = description;
+        inputDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(GuideProfile.this);
+                builder.setMessage(finalDescription)
+                        .setTitle("Descripción completa")
+                        .setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Cerrar el diálogo si se hace clic en "Cerrar"
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
 
 }
     private void getEmail(String creator, TextView inputCreator) {

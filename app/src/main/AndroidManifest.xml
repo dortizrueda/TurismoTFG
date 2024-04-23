@@ -17,6 +17,15 @@
         <activity android:name=".EditNameActivity"
             android:exported="false"
             android:label="edit_name"/>
+        <activity android:name=".HelpActivity"
+            android:exported="false"
+            android:label="help_activity"/>
+        <activity android:name=".TutorialActivity"
+            android:exported="false"
+            android:label="tutorial_activity"/>
+        <activity android:name=".GuideLikeActivity"
+            android:exported="false"
+            android:label="guide:like"/>
         <activity android:name=".EditPaswordActivity"
             android:exported="false"
             android:label="edit_email"/>

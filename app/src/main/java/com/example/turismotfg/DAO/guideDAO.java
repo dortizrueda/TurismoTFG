@@ -39,9 +39,9 @@ public class guideDAO {
                     FirebaseFirestore.getInstance().collection("users")
                             .document(uid)
                             .get()
-                            .addOnCompleteListener(task3 -> {
-                                if (task3.isSuccessful()) {
-                                    DocumentSnapshot userSnapshot = task3.getResult();
+                            .addOnCompleteListener(task2 -> {
+                                if (task2.isSuccessful()) {
+                                    DocumentSnapshot userSnapshot = task2.getResult();
                                     if (userSnapshot.exists()) {
                                         List<DocumentReference> favoriteGuideRefs = (List<DocumentReference>) userSnapshot.get("favorites");
                                         if (favoriteGuideRefs != null) {
@@ -64,7 +64,7 @@ public class guideDAO {
                                         favCallBack.isFav(false);
                                     }
                                 } else {
-                                    favCallBack.onError(task3.getException());
+                                    favCallBack.onError(task2.getException());
                                 }
                             });
                 }

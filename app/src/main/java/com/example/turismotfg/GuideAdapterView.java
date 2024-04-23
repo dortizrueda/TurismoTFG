@@ -326,7 +326,6 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
         }
 
         public void bindImages(List<String> imagenes) {
-            images.removeAllViews();
 
             for (String imageUrl : imagenes) {
                 ImageView imageView = new ImageView(context);

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    layout_width="match_parent"
+    layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:background="@drawable/fondo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Contenedor Principal -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/black"
+        android:alpha="0.7">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FUNCIONAMIENTO DE GUIAS"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="1. Abre la aplicación y explora las opciones de navegación.\n\n2. Selecciona una sección para ver las guías disponibles.\n\n3. Consulta las guías disponibles y elige una que te interese. Las guías que te interesen puedes almacenarlas como favoritas, y desde el menú lateral podrás acceder a ellas.\n\n4. Disfruta del contenido de la guía y sigue las instrucciones proporcionadas.\n\n4.1. En el perfil de las guías, encontrarás imágenes de los lugares que vas a visitar, además de una breve descripción de la guía y un audio explicativo de manera general. Este audio proporcionará instrucciones y recomendaciones a seguir.\n\n4.2. También podrás ver los lugares que se van a visitar. Al hacer clic en alguno de ellos, se abrirá un nuevo perfil con un audio que explicará detalladamente las curiosidades de dicho lugar de interés, así como otra información relevante.\n\n5. Además, en el perfil de las guías, tienes la opción de valorar las guías según tu experiencia. Puedes compartir tus opiniones y ayudar a otros usuarios a encontrar las mejores guías.\n\n "
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:lineSpacingExtra="8dp"
+                />
+        </ScrollView>
+
+    </LinearLayout>
+
+    <!-- Menú de Navegación Lateral -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/bottom_nav_menu"
+        app:headerLayout="@layout/header" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
+    android:background="@drawable/fondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 <LinearLayout
@@ -52,13 +53,14 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.7"
-        android:background="@color/black">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:alpha="0.7"
+            android:background="@color/black"
             android:padding="28dp"
             android:textAlignment="center">
 
@@ -90,29 +92,27 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
-                    <RelativeLayout
+                    <androidx.cardview.widget.CardView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@color/white"
-                        android:elevation="5dp">
+                        android:elevation="5dp"
+                        app:cardCornerRadius="50dp">
 
                         <ImageButton
                             android:id="@+id/guide_button"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:background="@drawable/hola1"/>
+                            android:background="@drawable/lista" />
 
-                    </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -123,16 +123,19 @@
 
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
-                    <RelativeLayout
+                    <androidx.cardview.widget.CardView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@color/white"
-                        android:elevation="5dp">
+                        android:elevation="5dp"
+                        app:cardCornerRadius="50dp">
 
                         <ImageButton
                             android:id="@+id/gps_button"
@@ -140,10 +143,10 @@
                             android:layout_height="80dp"
                             android:layout_alignParentTop="true"
                             android:layout_marginTop="-1dp"
-                            android:background="@drawable/gps"/>
+                            android:background="@drawable/mapa" />
 
 
-                    </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -154,45 +157,26 @@
 
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+                </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <TextView
-                    android:layout_marginTop="40dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Users of the system"
-                    android:textColor="@color/white"
-                    android:fontFamily="serif"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    />
+
             </LinearLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                >
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="0dp"
-                    android:background="@color/black"
-                    android:scrollbars="horizontal" />
-
-            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 android:padding="20dp">
 
@@ -204,37 +188,50 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="serif"
-                        android:textStyle="bold"
                         android:text="GUIDES"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/view_all"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="250dp"
+                        android:fontFamily="serif"
+                        android:text="view all"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:layout_marginTop="25dp"
+                        android:padding="0dp">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewGuide"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginTop="20dp"
+                            android:clipToPadding="false"
+                            android:orientation="horizontal"
+                            />
+                    </ScrollView>
 
                 </RelativeLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewGuide"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp" />
+
+
             </LinearLayout>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="189dp"
-                android:src="@drawable/settings"
-                app:tint="@color/black" />
 
 
         </LinearLayout>
     </ScrollView>
 
 </LinearLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"

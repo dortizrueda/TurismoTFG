@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,24 +49,20 @@ public class UserActivity extends AppCompatActivity {
 
     private FirebaseFirestore firestore;
     private CollectionReference usersReference,guideReference;
-    private ImageButton mapButton,guideButton,menu_icon;
+    private ImageButton mapButton,guideButton,menu_icon,tutorial_button;
+    private TextView view_all;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity);
 
-        fab = findViewById(R.id.fab);
-        recyclerView = findViewById(R.id.recyclerView);
+        view_all=findViewById(R.id.view_all);
         recyclerViewGuide = findViewById(R.id.recyclerViewGuide);
         mapButton = findViewById(R.id.gps_button);
         guideButton=findViewById(R.id.guide_button);
         menu_icon=findViewById(R.id.menu_icon);
 
-        userList = new ArrayList<>();
-        userAdapter = new UserAdapter(this, userList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(userAdapter);
 
         guideList = new ArrayList<>();
         placeList=new ArrayList<>();
@@ -90,6 +87,12 @@ public class UserActivity extends AppCompatActivity {
                     } else if (id == R.id.navigation_profile) {
                         Intent intent = new Intent(UserActivity.this, UserProfile.class);
                         startActivity(intent); 
+                    } else if (id == R.id.navigation_favs) {
+                        Intent intent = new Intent(UserActivity.this,GuideLikeActivity.class);
+                        startActivity(intent);
+                    } else if (id == R.id.navigation_help) {
+                        Intent intent=new Intent(UserActivity.this,HelpActivity.class);
+                        startActivity(intent);
                     } else if (id == R.id.navigation_logout) {
                         SharedPreferences sharedPreferences = getSharedPreferences(SHARE_PREFS, MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -105,21 +108,7 @@ public class UserActivity extends AppCompatActivity {
         });
 
         dialog.show();
-        usersReference.addSnapshotListener((queryDocumentSnapshots, error) -> {
-            if (error != null) {
-                dialog.dismiss();
-                return;
-            }
-
-            userList.clear();
-            for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
-                DocumentSnapshot documentSnapshot = documentChange.getDocument();
-                User user = documentSnapshot.toObject(User.class);
-                userList.add(user);
-            }
-            userAdapter.notifyDataSetChanged();
-            dialog.dismiss();
-        });
+        
         guideReference.addSnapshotListener((queryDocumentSnapshots, error) -> {
             if (error!=null){
                 dialog.dismiss();
@@ -139,6 +128,8 @@ public class UserActivity extends AppCompatActivity {
         //Inicializar Mapa
         mapButton.setOnClickListener(v -> startActivity(new Intent(UserActivity.this, MapView.class)));
         guideButton.setOnClickListener(v -> startActivity(new Intent(this,GuideActivity.class)));
+        view_all.setOnClickListener(v -> startActivity(new Intent(this,GuideActivity.class)));
+
         menu_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,8 +138,6 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-        fab.setOnClickListener(view -> {
-        });
 
 
     }
