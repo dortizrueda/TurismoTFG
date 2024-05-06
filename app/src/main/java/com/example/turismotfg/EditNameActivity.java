@@ -9,7 +9,7 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.turismotfg.DAO.userDAO;
+import com.example.turismotfg.Managers.userManager;
 
 public class EditNameActivity extends AppCompatActivity {
     @Override
@@ -24,7 +24,7 @@ public class EditNameActivity extends AppCompatActivity {
                 EditText name=findViewById(R.id.name);
                 String name1=name.getText().toString();
                 Log.d("NAME",name1);
-                userDAO user=new userDAO(EditNameActivity.this);
+                userManager user=new userManager(EditNameActivity.this);
                 user.editName(name1);
             }
         });

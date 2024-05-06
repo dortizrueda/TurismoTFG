@@ -9,7 +9,7 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.turismotfg.DAO.userDAO;
+import com.example.turismotfg.Managers.userManager;
 
 public class EditPaswordActivity extends AppCompatActivity {
     @Override
@@ -24,7 +24,7 @@ public class EditPaswordActivity extends AppCompatActivity {
                 EditText name=findViewById(R.id.email);
                 String name1=name.getText().toString();
                 Log.d("NAME",name1);
-                userDAO user=new userDAO(EditPaswordActivity.this);
+                userManager user=new userManager(EditPaswordActivity.this);
                 user.editPassword(name1);
             }
         });

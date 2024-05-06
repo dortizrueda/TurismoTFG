@@ -1,8 +1,13 @@
 package com.example.turismotfg;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceManager;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +18,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import android.widget.Toast;
 import com.example.turismotfg.Entity.Places;
+import com.example.turismotfg.Entity.Valoration;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -68,6 +74,7 @@ public class MapView extends AppCompatActivity {
 
 
             addPlaces();
+
             current_location = new MyLocationNewOverlay(mapa);
             current_location.enableMyLocation(); // Habilitar la visualización de la ubicación actual
             current_location.enableFollowLocation();
@@ -110,6 +117,40 @@ public class MapView extends AppCompatActivity {
                         marker.setPosition(point);
                         marker.setTitle(place.getNombre());
                         mapa.getOverlays().add(marker);
+                        final Places finalSelectedPlace = place;
+
+                        marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+                            @Override
+                            public boolean onMarkerClick(Marker marker, org.osmdroid.views.MapView mapView) {
+                                String placeName = marker.getTitle();
+                                Places selectedPlace = null;
+                                for (Places place : list_places) {
+                                    if (place.getNombre().equals(placeName)) {
+                                        selectedPlace = place;
+                                        break;
+                                    }
+                                }
+                                if (selectedPlace != null) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MapView.this);
+                                    builder.setMessage(selectedPlace.getNombre()+ "  ¿Desear mas información de este lugar? ")
+                                            .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    Intent intent = new Intent(MapView.this, PlaceProfile.class);
+                                                    intent.putExtra("place", finalSelectedPlace);
+                                                    startActivity(intent);
+                                                }
+                                            })
+                                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+                                }
+                                return true;
+                            }
+                        });
                     }
                     mapa.invalidate();
                 } else {

@@ -56,8 +56,6 @@ public class GuideLikeActivity extends AppCompatActivity {
         recyclerViewGuide = findViewById(R.id.recyclerViewGuide);
         searchView=findViewById(R.id.search_guide);
         searchView.clearFocus();
-        orderAsc=findViewById(R.id.check_orderAsc);
-        orderDesc=findViewById(R.id.check_orderDesc);
         menu_icon=findViewById(R.id.menu_icon);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
@@ -132,40 +130,11 @@ public class GuideLikeActivity extends AppCompatActivity {
                 Guide guide = documentSnapshot.toObject(Guide.class);
                 guideList.add(guide);
             }
+            guideAdapter.getInOrderByMedia();
             guideAdapter.notifyDataSetChanged();
             dialog.dismiss();
         });
-        orderAsc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    guideAdapter.getInOrderByMediaAsc();
-                    if (orderDesc.isChecked()) {
-                        orderDesc.setChecked(false);
-                    }
-                } else {
-                    // Puedes revertir la lista al orden original si lo deseas
-                    // guideAdapter.restoreOriginalOrder();
-                }
-            }
-        });
 
-        orderDesc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // Ordenar la lista en orden descendente
-                    guideAdapter.getInOrderByMedia();
-                    // Desmarcar checkOrderAsc si está marcado
-                    if (orderAsc.isChecked()) {
-                        orderAsc.setChecked(false);
-                    }
-                } else {
-                    // Puedes revertir la lista al orden original si lo deseas
-                    // guideAdapter.restoreOriginalOrder();
-                }
-            }
-        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

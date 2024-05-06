@@ -16,14 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.turismotfg.DAO.guideDAO;
-import com.example.turismotfg.DAO.userDAO;
-import com.example.turismotfg.DAO.valoracionesDAO;
+import com.example.turismotfg.Managers.guideManager;
+import com.example.turismotfg.Managers.userManager;
 import com.example.turismotfg.Entity.Guide;
 import com.example.turismotfg.Entity.Places;
-import com.example.turismotfg.Entity.Valoration;
-import com.example.turismotfg.interfaces.GuideFavCallBack;
-import com.example.turismotfg.interfaces.ValorationList;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,15 +33,11 @@ import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> {
-    final com.example.turismotfg.DAO.userDAO userDAO;
-    com.example.turismotfg.DAO.guideDAO guideDAO;
+    final userManager userManager;
+    guideManager guideManager;
     private Context context;
     private List<Guide> guideList;
     private List<Places> placeList;
@@ -57,8 +49,8 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
     public GuideAdapter(Context context, List<Guide> guideList) {
         this.context = context;
         this.guideList = guideList;
-        this.userDAO = new userDAO(context);
-        this.guideDAO=new guideDAO(context);
+        this.userManager = new userManager(context);
+        this.guideManager =new guideManager(context);
         firestore=FirebaseFirestore.getInstance();
         auth=FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
@@ -129,6 +121,7 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
                 i.putExtra("name", guideList.get(holder.getAdapterPosition()).getName());
                 i.putExtra("description", guideList.get(holder.getAdapterPosition()).getDescription());
                 i.putExtra("creator",guideList.get(holder.getAdapterPosition()).getCreator());
+                i.putExtra("audioURL",guideList.get(holder.getAdapterPosition()).getAudioUrl());
                 i.putExtra("placeList",(Serializable) placeList );
                 holder.context.startActivity(i);
             }

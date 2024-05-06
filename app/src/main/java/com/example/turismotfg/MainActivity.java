@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.turismotfg.DAO.userDAO;
+import com.example.turismotfg.Managers.userManager;
 import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnLogin = findViewById(R.id.btnLogin);
         Button btnRegister = findViewById(R.id.btnRegister);
         firebaseAuth= FirebaseAuth.getInstance();
-        userDAO user=new userDAO(MainActivity.this);
+        userManager user=new userManager(MainActivity.this);
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {

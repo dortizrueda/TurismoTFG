@@ -16,17 +16,15 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.turismotfg.DAO.valoracionesDAO;
+import com.example.turismotfg.Managers.valoracionesManager;
 import com.example.turismotfg.Entity.Guide;
 import com.example.turismotfg.Entity.Places;
-import com.example.turismotfg.DAO.userDAO;
-import com.example.turismotfg.DAO.guideDAO;
+import com.example.turismotfg.Managers.userManager;
+import com.example.turismotfg.Managers.guideManager;
 
 import com.example.turismotfg.Entity.Valoration;
 import com.example.turismotfg.interfaces.GuideFavCallBack;
 import com.example.turismotfg.interfaces.ValorationList;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,22 +33,19 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.ViewHolder> {
 
-    final userDAO userDAO;
-    guideDAO guideDAO;
+    final userManager userManager;
+    guideManager guideManager;
     private Context context;
     private List<Guide> guideList;
     private List<Places> placeList;
@@ -62,8 +57,8 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
     public GuideAdapterView(Context context, List<Guide> guideList) {
         this.context = context;
         this.guideList = guideList;
-        this.userDAO = new userDAO(context);
-        this.guideDAO=new guideDAO(context);
+        this.userManager = new userManager(context);
+        this.guideManager =new guideManager(context);
         firestore=FirebaseFirestore.getInstance();
         auth=FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
@@ -83,7 +78,7 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
         holder.name.setText(guideList.get(position).getName());
         holder.description.setText(guideList.get(position).getDescription());
         Guide guide=guideList.get(position);
-        guideDAO.checkGuide(user.getUid(), guideList.get(position).getName(), new GuideFavCallBack() {
+        guideManager.checkGuide(user.getUid(), guideList.get(position).getName(), new GuideFavCallBack() {
             @Override
             public void isFav(boolean fav) {
                 if (fav){
@@ -97,7 +92,7 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
 
             }
         });
-        valoracionesDAO.getAllValByGuide(guideList.get(position).getName(), new ValorationList() {
+        valoracionesManager.getAllValByGuide(guideList.get(position).getName(), new ValorationList() {
             @Override
             public void onListValoration(List<Valoration> valoraciones) {
                 int contador=0;
@@ -169,6 +164,7 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
                 i.putExtra("name", guideList.get(holder.getAdapterPosition()).getName());
                 i.putExtra("description", guideList.get(holder.getAdapterPosition()).getDescription());
                 i.putExtra("creator",guideList.get(holder.getAdapterPosition()).getCreator());
+                i.putExtra("audioURL",guideList.get(holder.getAdapterPosition()).getAudioUrl());
                 i.putExtra("placeList",(Serializable) placeList );
                 holder.context.startActivity(i);
             }
@@ -178,11 +174,11 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
             @Override
             public void onClick(View v) {
                 Guide currentGuide = guideList.get(holder.getAdapterPosition());
-                guideDAO.checkGuide(user.getUid(), currentGuide.getName(), new GuideFavCallBack() {
+                guideManager.checkGuide(user.getUid(), currentGuide.getName(), new GuideFavCallBack() {
                     @Override
                     public void isFav(boolean fav) {
                         if (fav){
-                            userDAO.removeGuideFromFavs(currentGuide,new OnCompleteListener<Void>(){
+                            userManager.removeGuideFromFavs(currentGuide,new OnCompleteListener<Void>(){
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
@@ -194,7 +190,7 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
                                 }
                             });
                         }else{
-                            userDAO.addGuideToUserFavs(currentGuide, new OnCompleteListener<Void>() {
+                            userManager.addGuideToUserFavs(currentGuide, new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
@@ -235,7 +231,7 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
         notifyDataSetChanged();
     }
     private void getMediaValoration(Guide o2) {
-        valoracionesDAO.getAllValByGuide(o2.getName(), new ValorationList() {
+        valoracionesManager.getAllValByGuide(o2.getName(), new ValorationList() {
             @Override
             public void onListValoration(List<Valoration> valoraciones) {
                 int contador=0;
@@ -274,7 +270,7 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
     }
 
     private void getMediaValoration2(Guide g) {
-        valoracionesDAO.getAllValByGuide(g.getName(), new ValorationList() {
+        valoracionesManager.getAllValByGuide(g.getName(), new ValorationList() {
             @Override
             public void onListValoration(List<Valoration> valoraciones) {
                 int contador=0;

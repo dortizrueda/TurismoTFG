@@ -54,8 +54,7 @@ public class GuideActivity extends AppCompatActivity {
         recyclerViewGuide = findViewById(R.id.recyclerViewGuide);
         searchView=findViewById(R.id.search_guide);
         searchView.clearFocus();
-        orderAsc=findViewById(R.id.check_orderAsc);
-        orderDesc=findViewById(R.id.check_orderDesc);
+
         menu_icon=findViewById(R.id.menu_icon);
         guideList = new ArrayList<>();
         placeList=new ArrayList<>();
@@ -77,40 +76,11 @@ public class GuideActivity extends AppCompatActivity {
                 Guide guide = documentSnapshot.toObject(Guide.class);
                 guideList.add(guide);
             }
+            guideAdapter.getInOrderByMedia();
             guideAdapter.notifyDataSetChanged();
             dialog.dismiss();
         });
-        orderAsc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    guideAdapter.getInOrderByMediaAsc();
-                    if (orderDesc.isChecked()) {
-                        orderDesc.setChecked(false);
-                    }
-                } else {
-                    // Puedes revertir la lista al orden original si lo deseas
-                    // guideAdapter.restoreOriginalOrder();
-                }
-            }
-        });
 
-        orderDesc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // Ordenar la lista en orden descendente
-                    guideAdapter.getInOrderByMedia();
-                    // Desmarcar checkOrderAsc si está marcado
-                    if (orderAsc.isChecked()) {
-                        orderAsc.setChecked(false);
-                    }
-                } else {
-                    // Puedes revertir la lista al orden original si lo deseas
-                    // guideAdapter.restoreOriginalOrder();
-                }
-            }
-        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -142,7 +112,13 @@ public class GuideActivity extends AppCompatActivity {
                 } else if (id == R.id.navigation_profile) {
                     Intent intent = new Intent(GuideActivity.this, UserProfile.class);
                     startActivity(intent);
-                } else if (id == R.id.navigation_logout) {
+                } else if (id == R.id.navigation_favs) {
+                    Intent intent = new Intent(GuideActivity.this,GuideLikeActivity.class);
+                    startActivity(intent);
+                } else if (id == R.id.navigation_help) {
+                    Intent intent=new Intent(GuideActivity.this,HelpActivity.class);
+                    startActivity(intent);
+                 } else if (id == R.id.navigation_logout) {
                     SharedPreferences sharedPreferences = getSharedPreferences(SHARE_PREFS, MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("active", false);

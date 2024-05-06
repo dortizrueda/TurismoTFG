@@ -1,6 +1,5 @@
 package com.example.turismotfg;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,14 +9,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.turismotfg.DAO.userDAO;
+import com.example.turismotfg.Managers.userManager;
 import com.example.turismotfg.Entity.Rol;
-import com.example.turismotfg.Entity.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class UserRegister extends AppCompatActivity {
@@ -41,7 +35,7 @@ public class UserRegister extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        userDAO user=new userDAO(UserRegister.this);
+        userManager user=new userManager(UserRegister.this);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

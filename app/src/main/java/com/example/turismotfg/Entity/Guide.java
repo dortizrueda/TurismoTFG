@@ -7,7 +7,7 @@ import java.util.List;
 public class Guide {
     private String name;
     private String description;
-    private String audioFileUrl; // URL del archivo de audio
+    private String audioURL; // URL del archivo de audio
     private int numPlaces; // Número de lugares asociados a la guía
     private float media;
     private String creator; // UID del creador de la guía
@@ -18,10 +18,10 @@ public class Guide {
     }
 
     // Constructor con parámetros
-    public Guide(String name, String description, String audioFileUrl, int numPlaces, String creator, List<DocumentReference> places,float media) {
+    public Guide(String name, String description, String audioURL, int numPlaces, String creator, List<DocumentReference> places,float media) {
         this.name = name;
         this.description = description;
-        this.audioFileUrl = audioFileUrl;
+        this.audioURL = audioURL;
         this.numPlaces = numPlaces;
         this.creator = creator;
         this.places = places;
@@ -48,12 +48,12 @@ public class Guide {
         this.description = description;
     }
 
-    public String getAudioFileUrl() {
-        return audioFileUrl;
+    public String getAudioUrl() {
+        return audioURL;
     }
 
-    public void setAudioFileUrl(String audioFileUrl) {
-        this.audioFileUrl = audioFileUrl;
+    public void setAudioUrl(String audioFileUrl) {
+        this.audioURL = audioFileUrl;
     }
 
     public int getNumPlaces() {

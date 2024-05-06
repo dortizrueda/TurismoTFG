@@ -53,6 +53,15 @@ public class PlaceProfile extends AppCompatActivity {
                     );
                     imageView.setLayoutParams(imageView1);
                     Picasso.get().load(imageUrl).resize(1100, 750).into(imageView);
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Acción a realizar cuando se hace clic en la imagen
+                            Intent intent = new Intent(PlaceProfile.this, ZoomImageActivity.class);
+                            intent.putExtra("imageUrl", imageUrl); // Pasa la URL de la imagen a la actividad de vista previa
+                            startActivity(intent);
+                        }
+                    });
                     inputView.addView(imageView);
                 }
                 String audio=place.getAudioFile();
@@ -168,7 +177,8 @@ public class PlaceProfile extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (reproductor != null) {
-            reproductor.release();
+            reproductor.reset();
+            reproductor=null;
         }
     }
 }

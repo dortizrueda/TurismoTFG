@@ -47,6 +47,17 @@
                 android:alpha="0.7"
                 android:fontFamily="@font/cinzel_decorative_bold"
                 android:src="@drawable/logo" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:text="ALL GUIDES"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:layout_marginLeft="150dp"
+                android:layout_below="@+id/nombre"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 <RelativeLayout
@@ -61,33 +72,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:background="@color/white"
         android:text="@string/search_guide">
 
     </androidx.appcompat.widget.SearchView>
-    <CheckBox
-        android:id="@+id/check_orderAsc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="60dp"
-        android:text="Order Asc by rating"
-        android:textColor="@color/white"
-        android:fontFamily="sans-serif-medium"
-        />
-    <CheckBox
-        android:id="@+id/check_orderDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="60dp"
-        android:text="Order Desc by rating"
-        android:textColor="@color/white"
-        android:fontFamily="sans-serif-medium"
-        />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
