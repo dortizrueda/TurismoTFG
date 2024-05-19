@@ -1,4 +1,4 @@
-package com.example.turismotfg;
+package com.example.turismotfg.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.turismotfg.GuideProfile;
 import com.example.turismotfg.Managers.valoracionesManager;
 import com.example.turismotfg.Entity.Guide;
 import com.example.turismotfg.Entity.Places;
@@ -23,6 +24,7 @@ import com.example.turismotfg.Managers.userManager;
 import com.example.turismotfg.Managers.guideManager;
 
 import com.example.turismotfg.Entity.Valoration;
+import com.example.turismotfg.R;
 import com.example.turismotfg.interfaces.GuideFavCallBack;
 import com.example.turismotfg.interfaces.ValorationList;
 import com.google.android.gms.tasks.Task;
@@ -322,6 +324,7 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
         }
 
         public void bindImages(List<String> imagenes) {
+            images.removeAllViewsInLayout();
 
             for (String imageUrl : imagenes) {
                 ImageView imageView = new ImageView(context);

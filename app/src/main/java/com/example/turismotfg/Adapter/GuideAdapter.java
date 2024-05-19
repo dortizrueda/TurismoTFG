@@ -1,4 +1,4 @@
-package com.example.turismotfg;
+package com.example.turismotfg.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,10 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.turismotfg.GuideProfile;
 import com.example.turismotfg.Managers.guideManager;
 import com.example.turismotfg.Managers.userManager;
 import com.example.turismotfg.Entity.Guide;
 import com.example.turismotfg.Entity.Places;
+import com.example.turismotfg.R;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -157,7 +159,7 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
         }
 
         public void bindImages(List<String> imagenes) {
-
+            images.removeAllViewsInLayout();
             for (String imageUrl : imagenes) {
                 ImageView imageView = new ImageView(context);
                 LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams(

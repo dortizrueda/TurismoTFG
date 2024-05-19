@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -22,6 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.turismotfg.Adapter.GuideAdapter;
 import com.example.turismotfg.Entity.Places;
 import com.example.turismotfg.Entity.User;
 import com.example.turismotfg.Entity.Guide;
@@ -38,7 +38,6 @@ import java.util.ArrayList;
 public class UserActivity extends AppCompatActivity {
 
     private ArrayList<User> userList;
-    private UserAdapter userAdapter;
     private ArrayList<Guide> guideList;
     private ArrayList<Places> placeList;
     private GuideAdapter guideAdapter;

@@ -43,24 +43,25 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="50dp"
                 android:alpha="0.7"
                 android:fontFamily="@font/cinzel_decorative_bold"
                 android:src="@drawable/logo" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/nombre"
+                android:layout_marginLeft="120dp"
                 android:fontFamily="serif"
                 android:text="ALL GUIDES"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:layout_marginLeft="150dp"
-                android:layout_below="@+id/nombre"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
-<RelativeLayout
+
+        <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
@@ -72,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:background="@color/white"
@@ -83,7 +84,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="95dp"
         android:padding="20dp">
 
 
@@ -98,7 +99,7 @@
         android:id="@+id/recyclerViewGuide"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="390dp"
+        android:layout_marginTop="310dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="20dp"

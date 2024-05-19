@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuideProfile extends AppCompatActivity {
-    Button back_button, button_maps, button_rating;
+    Button back_button,button_maps, button_rating,button_valoration;
     RatingBar ratingBar, mediaBar;
     private MediaPlayer reproductor;
     private SeekBar barra;
@@ -54,6 +55,7 @@ public class GuideProfile extends AppCompatActivity {
 
         back_button = findViewById(R.id.button_back);
         button_maps = findViewById(R.id.button_mapg);
+        button_valoration=findViewById(R.id.valoration);
         ratingBar = findViewById(R.id.guideValoration);
         button_rating = findViewById(R.id.button_rate);
         Button play = findViewById(R.id.playButton);
@@ -143,6 +145,18 @@ public class GuideProfile extends AppCompatActivity {
                         reproductor=null;
                     }
                     finish();
+                }
+            });
+            button_valoration.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (ratingBar.getVisibility() == View.GONE && button_rating.getVisibility() == View.GONE) {
+                        ratingBar.setVisibility(View.VISIBLE);
+                        button_rating.setVisibility(View.VISIBLE);
+                    } else {
+                        ratingBar.setVisibility(View.GONE);
+                        button_rating.setVisibility(View.GONE);
+                    }
                 }
             });
             button_rating.setOnClickListener(new View.OnClickListener() {

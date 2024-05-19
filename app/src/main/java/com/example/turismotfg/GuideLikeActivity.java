@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -23,6 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.turismotfg.Adapter.GuideAdapterView;
 import com.example.turismotfg.Entity.Guide;
 import com.example.turismotfg.Entity.Places;
 import com.google.android.material.navigation.NavigationView;
