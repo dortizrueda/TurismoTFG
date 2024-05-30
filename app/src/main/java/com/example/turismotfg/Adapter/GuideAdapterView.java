@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.turismotfg.GuideProfile;
+import com.example.turismotfg.Activities.GuideProfile;
 import com.example.turismotfg.Managers.valoracionesManager;
 import com.example.turismotfg.Entity.Guide;
 import com.example.turismotfg.Entity.Places;

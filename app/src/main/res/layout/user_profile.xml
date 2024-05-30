@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/container2"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".UserProfile">
+    tools:context=".Activities.UserProfile">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -62,13 +62,14 @@
                 android:background="@drawable/editar"
                 android:contentDescription="Edit Icon"
                 />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Name: "
                 android:paddingLeft="20dp"
-                android:textStyle="bold"/>
+                android:text="Nombre: "
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/textViewName"
                 android:layout_width="wrap_content"
@@ -94,13 +95,14 @@
                 android:background="@drawable/editar"
                 android:contentDescription="Edit Icon"
                 />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingLeft="20dp"
-                android:text="Surname: "
-                android:textStyle="bold"/>
+                android:text="Apellidos: "
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/textViewSurname"
                 android:layout_width="wrap_content"
@@ -125,13 +127,14 @@
                 android:background="@drawable/editar"
                 android:contentDescription="Edit Icon"
                 />
+
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="15dp"
                 android:layout_gravity="center"
                 android:paddingLeft="20dp"
-                android:text="Password: "
-                android:textStyle="bold"/>
+                android:text="Contraseña: "
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/textViewPassword"
                 android:layout_width="wrap_content"

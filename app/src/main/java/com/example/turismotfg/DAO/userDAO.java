@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 
 import com.example.turismotfg.Entity.User;
 import com.example.turismotfg.MainActivity;
-import com.example.turismotfg.UserProfile;
+import com.example.turismotfg.Activities.UserProfile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

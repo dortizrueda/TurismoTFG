@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.turismotfg.Activities.UserActivity;
+import com.example.turismotfg.Activities.UserRegister;
 import com.example.turismotfg.Managers.userManager;
 import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(MainActivity.this,UserRegister.class);
+                Intent i=new Intent(MainActivity.this, UserRegister.class);
                 MainActivity.this.startActivity(i);
             }
         });

@@ -3,28 +3,4 @@
     <item
         android:id="@+id/menu_home"
         android:title="Menu"/>
-    <item
-        android:id="@+id/menu_home"
-        android:title="Menu"/>
-    <item
-        android:id="@+id/menu_home"
-        android:title="Menu"/>
-    <item
-        android:id="@+id/menu_home"
-        android:title="Menu"/>
-    <item
-        android:id="@+id/menu_home"
-        android:title="Menu"/>
-    <item
-        android:id="@+id/menu_home"
-        android:title="Menu"/>
-    <item
-        android:id="@+id/menu_home"
-        android:title="Menu"/>
-    <item
-        android:id="@+id/menu_home"
-        android:title="Menu"/>
-    <item
-        android:id="@+id/menu_home"
-        android:title="Menu"/>
 </menu>

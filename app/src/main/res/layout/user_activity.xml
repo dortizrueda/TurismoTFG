@@ -112,7 +112,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Guides"
+                        android:text="Guías"
                         android:textColor="@color/white" />
 
 
@@ -146,7 +146,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="GPS"
+                        android:text="Mapa"
                         android:textColor="@color/white" />
 
 
@@ -182,7 +182,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="serif"
-                        android:text="GUIDES"
+                        android:text="GUÍAS"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="20sp"

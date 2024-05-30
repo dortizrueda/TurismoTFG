@@ -8,6 +8,7 @@ public class Guide {
     private String name;
     private String description;
     private String audioURL; // URL del archivo de audio
+    private String city;
     private int numPlaces; // Número de lugares asociados a la guía
     private float media;
     private String creator; // UID del creador de la guía
@@ -18,10 +19,11 @@ public class Guide {
     }
 
     // Constructor con parámetros
-    public Guide(String name, String description, String audioURL, int numPlaces, String creator, List<DocumentReference> places,float media) {
+    public Guide(String name, String description, String audioURL,String city, int numPlaces, String creator, List<DocumentReference> places,float media) {
         this.name = name;
         this.description = description;
         this.audioURL = audioURL;
+        this.city=city;
         this.numPlaces = numPlaces;
         this.creator = creator;
         this.places = places;
@@ -54,6 +56,13 @@ public class Guide {
 
     public void setAudioUrl(String audioFileUrl) {
         this.audioURL = audioFileUrl;
+    }
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public int getNumPlaces() {

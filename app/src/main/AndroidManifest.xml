@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/d  ata_extraction_rules"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,45 +14,45 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TurismoTFG"
         tools:targetApi="31">
-        <activity android:name=".EditNameActivity"
+        <activity android:name=".Activities.EditNameActivity"
             android:exported="false"
             android:label="edit_name"/>
-        <activity android:name=".HelpActivity"
+        <activity android:name=".Activities.HelpActivity"
             android:exported="false"
             android:label="help_activity"/>
-        <activity android:name=".GuideLikeActivity"
+        <activity android:name=".Activities.GuideLikeActivity"
             android:exported="false"
             android:label="guide:like"/>
-        <activity android:name=".EditPaswordActivity"
+        <activity android:name=".Activities.EditPaswordActivity"
             android:exported="false"
             android:label="edit_email"/>
-        <activity android:name=".EditSurnameActivity"
+        <activity android:name=".Activities.EditSurnameActivity"
             android:exported="false"
             android:label="edit_surname"/>
         <activity
-            android:name=".PlaceProfile"
+            android:name=".Activities.PlaceProfile"
             android:exported="false"
             android:label="place_profile" />
         <activity
-            android:name=".GuideActivity"
+            android:name=".Activities.GuideActivity"
             android:exported="false"
             android:label="guide_activity" />
-        <activity android:name=".ZoomImageActivity"
+        <activity android:name=".Activities.ZoomImageActivity"
             android:exported="false"
             android:label="zoom_image"/>
-        <activity android:name=".UserActivity"
+        <activity android:name=".Activities.UserActivity"
             android:exported="false"
             android:label="user_activity"/>
-        <activity android:name=".UserProfile"
+        <activity android:name=".Activities.UserProfile"
             android:exported="false"
             android:label="user_profile"/>
-        <activity android:name=".GuideProfile"
+        <activity android:name=".Activities.GuideProfile"
             android:exported="false"
             android:label="guide_profile"/>
-        <activity android:name=".MapView"
+        <activity android:name=".Activities.MapView"
             android:exported="false"
             android:label="map_view"/>
-        <activity android:name=".MapGuideView"
+        <activity android:name=".Activities.MapGuideView"
             android:exported="false"
             android:label="map_guide"/>
         <activity
@@ -64,7 +64,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserRegister" />
+        <activity android:name=".Activities.UserRegister" />
 
         <meta-data
             android:name="preloaded_fonts"
