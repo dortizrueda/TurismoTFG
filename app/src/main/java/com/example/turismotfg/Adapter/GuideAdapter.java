@@ -36,7 +36,12 @@ import com.squareup.picasso.Picasso;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Clase que muestra e adaptor para muestrar el listado de guías.
+ *
+ * @autor David Ortiz Rueda
+ * @version 1.0
+ */
 public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> {
     final userManager userManager;
     guideManager guideManager;
@@ -48,6 +53,11 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
     private FirebaseAuth auth;
     private FirebaseUser user;
 
+    /**
+     * Constructor del adaptador de guías.
+     * @param context El contexto de la actividad.
+     * @param guideList La lista de guías a mostrar.
+     */
     public GuideAdapter(Context context, List<Guide> guideList) {
         this.context = context;
         this.guideList = guideList;
@@ -57,7 +67,12 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
         auth=FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
     }
-
+    /**
+     * Método que crea nuevas vistas.
+     * @param parent El ViewGroup al cual estas nuevas vistas serán añadidas después de ser vinculadas a una posición del adaptador.
+     * @param viewType El tipo de la nueva vista.
+     * @return Un nuevo ViewHolder que contiene una vista de la guía.
+     */
     @NonNull
     @Override
     public GuideAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -65,7 +80,12 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
         return new GuideAdapter.ViewHolder(view, context);
     }
 
-
+    /**
+     * Método se encarga de vincular los datos de las guías.
+     *
+     * @param holder referencias a las vistas de los adaptadores.
+     * @param position Posición de la lista.
+     */
 
     @Override
     public void onBindViewHolder(@NonNull GuideAdapter.ViewHolder holder, int position) {
@@ -116,6 +136,7 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
             Toast toast = Toast.makeText(context, "No existen lugares en esta guia...", Toast.LENGTH_SHORT);
             toast.show();
         }
+        //Envio de información al GuideProfile
         holder.recycler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +152,10 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
 
 
     }
-
+    /**
+     * Devuelve el numero de elementos del recyclerView.
+     * @return  int Devuelve el numero de items de la lista.
+     */
     @Override
     public int getItemCount() {
         return Math.min(2, guideList.size());
@@ -147,7 +171,12 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
         ImageButton favs;
         CardView recycler;
         Context context;
-
+        /**
+         * Constructor de ViewHolder.
+         *
+         * @param itemView Vista del layout.
+         * @param context Contexto de la actividad.
+         */
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this.context = context;
@@ -157,7 +186,10 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
             images=itemView.findViewById(R.id.placeView);
 
         }
-
+        /**
+         * Vincula las imágenes del lugar a la vista.
+         * @param imagenes Lista de URLs de las imágenes.
+         */
         public void bindImages(List<String> imagenes) {
             images.removeAllViewsInLayout();
             for (String imageUrl : imagenes) {

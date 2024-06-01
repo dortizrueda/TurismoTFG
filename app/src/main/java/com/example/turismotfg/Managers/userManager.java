@@ -33,7 +33,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Clase utilizada para manejar los usuarios del sistema.
+ *
+ * @autor David Ortiz Rueda
+ * @version 1.0
+ */
 public class userManager {
     private static final String SHARE_PREFS="shared_prefs";
     private static final String EMAIL_KEY="email";
@@ -47,16 +52,22 @@ public class userManager {
     userDAO userDao=new userDAO();
     guideDAO guideDao=new guideDAO();
 
-    public static class Email {
-        public String email;
-    }
 
+    /**
+     * Constructor de la clase userManager.
+     * @param context Contexto de la aplicación.
+     */
     public userManager(Context context) {
         this.context = context;
         firestore = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
     }
-
+    /**
+     * Método que controla si un usuario se encuentra en la
+     * parte de autenticación de Firebase.
+     * @param email email del login.
+     * @param password contraseña del login.
+     */
     public void login(String email, String password) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
@@ -70,7 +81,14 @@ public class userManager {
     }
 
 
-
+    /**
+     * Método que registra un usuario en Firebase.
+     * @param email email del registro.
+     * @param name nombre del registro.
+     * @param rol rol del registro.
+     * @param surname apellidos del registro.
+     * @param password contraseña del registro.
+     */
     public void register(String email, String name, String surname, String password,Rol rol){
         // Crear usuario en Firebase Authentication
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
@@ -88,7 +106,11 @@ public class userManager {
                     }
                 });
     }
-
+    /**
+     * Método que comprueba que el usuario de Firebase Auth,
+     * se encuentra en FireStore y controla acceso a la aplicación.
+     * @param email email del registro.
+     */
     private void checkUser(String email) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usersRef = db.collection("users");
@@ -103,7 +125,6 @@ public class userManager {
                                 User user = document.toObject(User.class);
 
                                 if (user != null) {
-                                    // Autenticación exitosa y se obtuvo la información del usuario
                                     Intent i;
                                     SharedPreferences sharedPreferences = context.getSharedPreferences(SHARE_PREFS, MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -117,18 +138,14 @@ public class userManager {
                                     editor.apply();
 
                                     if (TextUtils.equals(user.getRol().toString(), Rol.admin.toString())) {
-                                        // Usuario administrador, redirecciona a la actividad de administrador
                                         i = new Intent(context, MainActivity.class);
                                     } else {
-                                        // No es administrador, redirecciona a la actividad de usuario normal
                                         i = new Intent(context, UserActivity.class);
                                     }
 
-                                    // Pasa el objeto del usuario como extra al intent
                                     i.putExtra("USER_OBJECT_EXTRA", user);
                                     context.startActivity(i);
                                 } else {
-                                    // El objeto User es nulo, manejar el caso según tus necesidades
                                     Toast toast = Toast.makeText(context, "Error al obtener información del usuario", Toast.LENGTH_SHORT);
                                     toast.show();
                                 }
@@ -142,17 +159,32 @@ public class userManager {
                 });
 
     }
-
+    /**
+     * Método que llama al DAO de editar el Nombre del usuario.
+     * @param name nombre del registro.
+     */
     public void editName(String name){
         userDao.editNameDAO(name,user.getUid(),context);
     }
+    /**
+     * Método que llama al DAO de editar la contraseña del usuario.
+     * @param password contraseña del registro.
+     */
     public void editPassword(String password){
        userDao.editPasswordDAO(password,context);
     }
-
+    /**
+     * Método que llama al DAO de editar los apellidos del usuario.
+     * @param name apellidos del registro.
+     */
     public void editSurname(String name){
         userDao.editSurnameDAO(name,user.getUid(),context);
     }
+    /**
+     * Método que elimina alguna de las guías de las favoritas del usuario.
+     * @param guide Objeto de la guía a eliminar de favs.
+     * @param onCompleteListener Maneja que la actividad se haya completado.
+     */
 public void removeGuideFromFavs(Guide guide,OnCompleteListener<Void> onCompleteListener){
         String name= guide.getName();
         if (user!=null){
@@ -194,6 +226,11 @@ public void removeGuideFromFavs(Guide guide,OnCompleteListener<Void> onCompleteL
             });
         }
 }
+    /**
+     * Método que añade alguna de las guías de las favoritas del usuario.
+     * @param guide Objeto de la guía a eliminar de favs.
+     * @param onCompleteListener Maneja que la actividad se haya completado.
+     */
     public void addGuideToUserFavs(Guide guide, OnCompleteListener<Void> onCompleteListener) {
         String name = guide.getName();
         if (user != null) {

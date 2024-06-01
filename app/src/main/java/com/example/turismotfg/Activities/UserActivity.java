@@ -37,7 +37,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 /**
- * Clase que muestra la actividad ppal de la aplicaión
+ * Clase que muestra la actividad princicpal de la aplicaión
  *
  * @autor David Ortiz Rueda
  * @version 1.0
@@ -154,6 +154,11 @@ public class UserActivity extends AppCompatActivity {
 
 
     }
+    /**
+     * Crea un diálogo y lo devuelve
+     *
+     * @return El diálogo de progreso.
+     */
     private AlertDialog createProgressDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
         builder.setCancelable(false);

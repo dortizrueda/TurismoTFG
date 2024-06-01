@@ -13,19 +13,34 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 import java.util.ArrayList;
-
+/**
+ * Clase utilizada para manejar las
+ * guías del sistema.
+ *
+ * @autor David Ortiz Rueda
+ * @version 1.0
+ */
 public class guideManager {
     private FirebaseFirestore firestore;
     private Context context;
     guideDAO guideDao=new guideDAO();
-
+    /**
+     * Constructor de la clase guideManager.
+     * @param context Contexto de la aplicación.
+     */
     public guideManager(Context context) {
         this.context=context;
         firestore = FirebaseFirestore.getInstance();
     }
 
 
-
+    /**
+     * Método que controla si una guía pertenece a las favoritas de
+     * x-usuario.
+     * @param name nombre de la guía.
+     * @param uid Listener que maneja que se completa la tarea.
+     * @param favCallBack Callback que maneja si una guía es favorita.
+     */
     public void checkGuide(String uid, String name, GuideFavCallBack favCallBack) {
         guideDao.getGuideId(name, task -> {
             if (task.isSuccessful()) {

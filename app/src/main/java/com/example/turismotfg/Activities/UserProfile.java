@@ -19,8 +19,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.turismotfg.MainActivity;
 import com.example.turismotfg.R;
 import com.google.android.material.navigation.NavigationView;
-
+/**
+ * Clase que muestra la actividad del perfil del Usuario
+ *
+ * @autor David Ortiz Rueda
+ * @version 1.0
+ */
 public class UserProfile extends AppCompatActivity {
+    /**
+     * Método que se ejecuta al iniciar la actividad.
+     *
+     * @param savedInstanceState estado de la actividad.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +45,8 @@ public class UserProfile extends AppCompatActivity {
         ImageButton edit_surname=findViewById(R.id.editSurname);
         ImageButton edit_email=findViewById(R.id.editPassword);
         ImageButton menu_icon=findViewById(R.id.menu_icon);
+
+        //Listener que abre el menú lateral de la aplicación
         menu_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,6 +56,7 @@ public class UserProfile extends AppCompatActivity {
         });
         Button back_button=findViewById(R.id.button_back);
         NavigationView navigationView = findViewById(R.id.navigation_view);
+        //Listener de los botones del interior del menú lateral
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -94,13 +107,14 @@ public class UserProfile extends AppCompatActivity {
         detailSurnameTextView.setText(surname);
         detailRolTextView.setText(rol);
         detailPasswordTextView.setText(password);
-
+        //Listener para volver a la pantalla anterior
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        //Listener que abre la actividad EditNameActivity
         edit_name.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -108,6 +122,7 @@ public class UserProfile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //Listener que abre la actividad EditSurnameActivity
         edit_surname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +130,7 @@ public class UserProfile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //Listener que abre la actividad EditPasswordActivity
         edit_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

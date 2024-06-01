@@ -9,8 +9,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.turismotfg.R;
 import com.squareup.picasso.Picasso;
-
+/**
+ * Clase que muestra las imágenes para verlas en su resolución correspondiente.
+ *
+ * @autor David Ortiz Rueda
+ * @version 1.0
+ */
 public class ZoomImageActivity extends AppCompatActivity {
+    /**
+     * Método que se ejecuta al iniciar la actividad.
+     *
+     * @param savedInstanceState estado de la actividad.
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

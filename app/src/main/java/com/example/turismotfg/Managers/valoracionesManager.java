@@ -22,7 +22,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Clase utilizada para manejar las
+ * valoraciones del sistema.
+ *
+ * @autor David Ortiz Rueda
+ * @version 1.0
+ */
 public class valoracionesManager {
     private static final String TAG = "ValoracionesDAO";
     private FirebaseFirestore firestore;
@@ -31,14 +37,21 @@ public class valoracionesManager {
     static guideDAO guideDAO=new guideDAO();
     valoracionesDAO valoracionesDAO=new valoracionesDAO();
 
-
+    /**
+     * Constructor de la clase valoracionesManager.
+     * @param context Contexto de la aplicación.
+     */
     public valoracionesManager(Context context) {
         this.context = context;
         firestore = FirebaseFirestore.getInstance();
         valoracionesRef = firestore.collection("valoraciones");
     }
 
-
+    /**
+     * Método que obtiene todas las valoraciones de una guía.
+     * @param guide_name nombre de la guía.
+     * @param callbackList callback que devuelve la lista.
+     */
     public static void getAllValByGuide(String guide_name, ValorationList callbackList) {
         List<Valoration> valoraciones = new ArrayList<>();
         guideDAO.getGuideId(guide_name, task -> {
@@ -70,7 +83,13 @@ public class valoracionesManager {
         });
     }
 
-
+    /**
+     * Método que obtiene la valoración que ha
+     * otorgado un usuario a una guía en concreto.
+     * @param user_id id del user.
+     * @param name nombre de la guía.
+     * @param ratingBar barra de valoración donde se mostrará la calificación.
+     */
     public void getValoracionByGuideandUser(String user_id, String name, RatingBar ratingBar) {
         guideDAO.getGuideId(name, task -> {
             if (task.isSuccessful()) {
@@ -100,7 +119,12 @@ public class valoracionesManager {
             }
         });
     }
-
+    /**
+     * Método que controla el registro de valoraciones.
+     * @param user_uid id de usuario.
+     * @param name nombre de la guía.
+     * @param value valor de la calificación.
+     */
     public void addValoracion(String user_uid, String name, float value) {
         guideDAO.getGuideId(name, task -> {
             if (task.isSuccessful()) {

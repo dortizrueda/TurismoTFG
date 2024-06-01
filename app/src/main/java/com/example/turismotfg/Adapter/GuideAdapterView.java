@@ -43,7 +43,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
+/**
+ * Clase que muestra e adaptor para muetra el listado de guías.
+ *
+ * @autor David Ortiz Rueda
+ * @version 1.0
+ */
 public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.ViewHolder> {
 
     final userManager userManager;
@@ -55,7 +60,11 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
     private FirebaseFirestore firestore;
     private FirebaseAuth auth;
     private FirebaseUser user;
-
+    /**
+     * Constructor del adaptador de guías.
+     * @param context El contexto de la actividad.
+     * @param guideList La lista de guías a mostrar.
+     */
     public GuideAdapterView(Context context, List<Guide> guideList) {
         this.context = context;
         this.guideList = guideList;
@@ -65,7 +74,12 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
         auth=FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
     }
-
+    /**
+     * Método que crea nuevas vistas.
+     * @param parent El ViewGroup al cual estas nuevas vistas serán añadidas después de ser vinculadas a una posición del adaptador.
+     * @param viewType El tipo de la nueva vista.
+     * @return Un nuevo ViewHolder que contiene una vista de la guía.
+     */
     @NonNull
     @Override
     public GuideAdapterView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -74,12 +88,18 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
     }
 
 
-
+    /**
+     * Método se encarga de vincular los datos de las guías.
+     *
+     * @param holder referencias a las vistas de los adaptadores.
+     * @param position Posición de la lista.
+     */
     @Override
     public void onBindViewHolder(@NonNull GuideAdapterView.ViewHolder holder, int position) {
         holder.name.setText(guideList.get(position).getName());
         holder.description.setText(guideList.get(position).getDescription());
         Guide guide=guideList.get(position);
+        //Método que compueba que guía es favorita
         guideManager.checkGuide(user.getUid(), guideList.get(position).getName(), new GuideFavCallBack() {
             @Override
             public void isFav(boolean fav) {
@@ -94,6 +114,8 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
 
             }
         });
+        //Método que reune todas las valoraciones de una
+        // guía, y calcula la media para añadirla a una barra de estrellas.
         valoracionesManager.getAllValByGuide(guideList.get(position).getName(), new ValorationList() {
             @Override
             public void onListValoration(List<Valoration> valoraciones) {
@@ -159,6 +181,7 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
             Toast toast = Toast.makeText(context, "No existen lugares en esta guia...", Toast.LENGTH_SHORT);
             toast.show();
         }
+        //Listener que envía los dato al GuideProfile
         holder.recycler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +194,7 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
                 holder.context.startActivity(i);
             }
         });
-
+        //Listener que controla la eliminación o inclusión de una guía como favoritas
         holder.favs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,21 +240,36 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
         });
 
     }
-
+    /**
+     * Devuelve el numero de elementos del recyclerView.
+     * @return  int Devuelve el numero de items de la lista.
+     */
     @Override
     public int getItemCount() {
         return guideList.size();
     }
+    /**
+     * Ordenar de mayor a menor valoración.
+     *
+     */
     public void getInOrderByMedia(){
         Log.d("DENTRO", "getInOrderByMedia");
         for (Guide g:guideList){
             getMediaValoration(g);
         }
     }
+    /**
+     * Método que filtrado el listado de guías.
+     * @param list Listado de guías filtrado o no filtrado.
+     */
     public void setGuideListFilter(List<Guide>list){
         this.guideList=list;
         notifyDataSetChanged();
     }
+    /**
+     * Método que obtiene la valoración media de cada guía.
+     * @param o2 objeto de Guia.
+     */
     private void getMediaValoration(Guide o2) {
         valoracionesManager.getAllValByGuide(o2.getName(), new ValorationList() {
             @Override
@@ -264,44 +302,7 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
         });
     }
 
-    public void getInOrderByMediaAsc() {
-        Log.d("DENTRO", "getInOrderByMedia");
-        for (Guide g:guideList){
-            getMediaValoration2(g);
-        }
-    }
 
-    private void getMediaValoration2(Guide g) {
-        valoracionesManager.getAllValByGuide(g.getName(), new ValorationList() {
-            @Override
-            public void onListValoration(List<Valoration> valoraciones) {
-                int contador=0;
-                float suma=0;
-                for (Valoration v:valoraciones) {
-                    Log.d("MEDIA", String.valueOf(v.getGuideId()));
-                    suma = suma + v.getRating();
-                    contador = contador + 1;
-                }
-                float valoracion_media=suma/contador;
-                g.setMedia(valoracion_media);
-                Log.d("MEDIA",String.valueOf(valoracion_media));
-                if (guideList.indexOf(g) == guideList.size() - 1) {
-                    Collections.sort(guideList, new Comparator<Guide>() {
-                        @Override
-                        public int compare(Guide o1, Guide o2) {
-                            return Float.compare(o1.getMedia(), o2.getMedia()); // Orden descendente
-                        }
-                    });
-                    notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onError(Exception exception) {
-
-            }
-        });
-    }
 
     //Clase estatica...
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -311,7 +312,12 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
         ImageButton favs;
         CardView recycler;
         Context context;
-
+        /**
+         * Constructor de ViewHolder.
+         *
+         * @param itemView Vista del layout.
+         * @param context Contexto de la actividad.
+         */
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this.context = context;
@@ -322,7 +328,10 @@ public class GuideAdapterView extends RecyclerView.Adapter<GuideAdapterView.View
             favs=itemView.findViewById(R.id.imageViewFavorite);
             mediabar=itemView.findViewById(R.id.average_rating);
         }
-
+        /**
+         * Vincula las imágenes del lugar a la vista.
+         * @param imagenes Lista de URLs de las imágenes.
+         */
         public void bindImages(List<String> imagenes) {
             images.removeAllViewsInLayout();
 

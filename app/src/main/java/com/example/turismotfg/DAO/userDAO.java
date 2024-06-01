@@ -24,7 +24,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+/**
+ * Clase utilizada para el acceso a los datos
+ * del objeto User.
+ *
+ * @autor David Ortiz Rueda
+ * @version 1.0
+ */
 public class userDAO {
     private static final String SHARE_PREFS="shared_prefs";
     private static final String EMAIL_KEY="email";
@@ -35,7 +41,12 @@ public class userDAO {
     private FirebaseFirestore firestore;
     private FirebaseUser user;
     private Context context;
-
+    /**
+     * Método que registra un nuevo usuario al sistema.
+     * @param user Objeto User que se va a registrar.
+     * @param context Contexto de la aplicación.
+     * @param userId Id del usuario a registrar.
+     */
     public void addUser(User user, String userId,Context context){
         CollectionReference usersRef = FirebaseFirestore.getInstance().collection("users");
         usersRef.document(userId).set(user)
@@ -49,6 +60,12 @@ public class userDAO {
                     Toast.makeText(context, "Error al registrar el usuario en Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
+    /**
+     * Método que modifica el apellido de un usuario del sistema.
+     * @param name Apellido nuevo.
+     * @param context Contexto de la aplicación.
+     * @param userId Id del usuario a registrar.
+     */
     public void editSurnameDAO(String name,String userId,Context context){
         DocumentReference ref_user=FirebaseFirestore.getInstance().collection("users").document(userId);
         ref_user.update("surname",name)
@@ -75,6 +92,12 @@ public class userDAO {
                 });
 
     }
+    /**
+     * Método que modifica el apellido de un usuario del sistema.
+     * @param name Nombre nuevo.
+     * @param context Contexto de la aplicación.
+     * @param id Id del usuario a registrar.
+     */
     public void editNameDAO(String name,String id,Context context){
         DocumentReference ref_user=FirebaseFirestore.getInstance().collection("users").document(id);
         ref_user.update("name",name)
@@ -101,6 +124,11 @@ public class userDAO {
                 });
 
     }
+    /**
+     * Método que modifica el apellido de un usuario del sistema.
+     * @param password Contraseña nueva.
+     * @param context Contexto de la aplicación.
+     */
     public void editPasswordDAO(String password,Context context){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String email = user.getEmail();
@@ -125,7 +153,6 @@ public class userDAO {
                                 userRef.update("password", password).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        // Aquí puedes manejar cualquier lógica adicional después de actualizar la contraseña
                                         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARE_PREFS, MODE_PRIVATE);
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
                                         editor.putString(PASSWORD_KEY,password);
